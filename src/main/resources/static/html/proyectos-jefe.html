@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSCANVAS - Proyectos</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3.1.1/dist/iconify.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body class="has-sidebar reportes-wide">
+<body class="has-sidebar">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="iconify sidebar-logo" data-icon="noto:card-index-dividers"></span>
+                <div class="sidebar-title">SYSCANVAS</div>
+                <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="/html/inicio-jefe.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="menu-text">Inicio</span>
+                </a>
+
+                <a href="/html/proyectos-jefe.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-chart-column"></i></span>
+                    <span class="menu-text">Proyectos</span>
+                </a>
+
+                <a href="/html/reportes.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-clipboard-list"></i></span>
+                    <span class="menu-text">Reportes</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="javascript:void(0)" onclick="logout()" class="menu-item-logout">
+                    <span class="menu-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+                    <span class="menu-text">Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div class="logo">📂 Proyectos</div>
+                <div class="user-info">
+                    <span class="user-name" id="user-name">Cargando...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenedor -->
+        <div class="container">
+
+            <!-- Filtros -->
+            <div class="card">
+                <div class="card-header">
+                    <h1>Gestión de Proyectos</h1>
+                </div>
+
+                <div class="grid grid-2 mb-4">
+                    <div class="form-group">
+                        <label for="filter-estado" class="form-label">Estado del Proyecto</label>
+                        <select id="filter-estado" class="form-control" onchange="aplicarFiltros()">
+                            <option value="">Todos</option>
+                            <option value="1" selected>Activos</option>
+                            <option value="0">Inactivos</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="search-proyecto" class="form-label">Buscar por Nombre</label>
+                        <input type="text" id="search-proyecto" class="form-control" 
+                               placeholder="Filtrar proyectos..." 
+                               oninput="aplicarFiltros()">
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="cargarProyectos()">🔄 Actualizar</button>
+            </div>
+
+            <!-- Alertas -->
+            <div id="alert-container"></div>
+
+            <!-- Loading -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p class="mt-2">Cargando proyectos...</p>
+            </div>
+
+            <!-- Lista de Proyectos -->
+            <div id="proyectos-list" class="grid grid-2"></div>
+
+            <!-- Sin resultados -->
+            <div id="no-results" class="empty-state hidden">
+                <div class="empty-state-icon">📋</div>
+                <div class="empty-state-text">No se encontraron proyectos</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Detalle Proyecto -->
+    <div id="modal-detalle" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-proyecto-nombre">Cargando...</h2>
+                <button class="modal-close" onclick="cerrarModalDetalle()">&times;</button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs mb-4">
+                <button class="tab-btn active" onclick="cambiarTab('canvas', this)">📊 Canvas</button>
+            <!-- <button class="tab-btn" onclick="cambiarTab('analistas', this)">👥 Analistas</button>-->
+                <button class="tab-btn" onclick="cambiarTab('estadisticas', this)">📈 Estadísticas</button>
+            </div>
+
+            <!-- Tab: Canvas -->
+            <div id="tab-canvas" class="tab-content active">
+                <div id="canvas-proyecto-list"></div>
+            </div>
+
+            <!-- Tab: Analistas -->
+            <div id="tab-analistas" class="tab-content hidden">
+                <div id="analistas-proyecto-list"></div>
+            </div>
+
+            <!-- Tab: Estadísticas -->
+            <div id="tab-estadisticas" class="tab-content hidden">
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-canvas-total">0</div>
+                        <div class="stat-label">Canvas Totales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-tareas-total">0</div>
+                        <div class="stat-label">Tareas Totales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-progreso-prom">0%</div>
+                        <div class="stat-label">Progreso Promedio</div>
+                    </div>
+                </div>
+
+                <canvas id="chart-progreso" style="max-height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template: Proyecto Card -->
+    <template id="proyecto-card-template">
+        <div class="proyecto-card-header">
+            <h3 class="proyecto-card-title"></h3>
+            
+        </div>
+        <div class="proyecto-card-body">
+            <!-- FECHA + ESTADO JUNTOS -->
+            <div class="proyecto-fecha-estado">
+                <p class="text-sm text-gray">
+                    📅 <span class="proyecto-anios"></span>
+                </p>
+
+                <span class="badge badge-estado"></span>
+            </div>
+            <div class="text-sm text-gray mb-2">
+                📊 <span class="proyecto-canvas">0</span> canvas •
+                ✅ <span class="proyecto-tareas">0</span> tareas
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        <div class="proyecto-card-footer">
+            <button class="btn btn-primary btn-sm" onclick="verDetalleProyecto(this.dataset.id)">
+                👁 Ver Detalle
+            </button>
+        </div>
+    </template>
+
+    <!-- Scripts -->
+    <script src="/js/auth.js"></script>
+    <script src="/js/jefe-proyectos.js"></script>
+    <script src="/js/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+</html>

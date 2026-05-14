@@ -1,0 +1,886 @@
+--- Secuencias
+CREATE SEQUENCE SYSCANVAS.ISECUNO
+    START WITH 61
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+CREATE SEQUENCE SYSCANVAS.T_DOCUMENTO_SEQ
+    START WITH 7
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+CREATE SEQUENCE SYSCANVAS.T_ENTREGABLE_SEQ
+    START WITH 3
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+CREATE SEQUENCE SYSCANVAS.T_PAQUETE_SEQ
+    START WITH 3
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+--- Tablas
+CREATE TABLE SYSCANVAS.T_ASEGURADORA (
+    CODASEG                 NUMBER(6),
+    DENASEGURADORA          VARCHAR2(100),
+    FLGASEBROK              VARCHAR2(1),
+    NROCELULAR              VARCHAR2(12),
+    EMAIL                   VARCHAR2(60),
+    OBSERVAC                VARCHAR2(1000),
+    VIGENCIA                VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_ASEGURADORA.FLGASEBROK IS '0: Aseguradora / 1: Broker';
+
+CREATE TABLE SYSCANVAS.T_CAPACITACION (
+    CODPERS                 NUMBER(6, 0),
+    CORRCAP                 NUMBER(5, 0),
+    CODGRADO                NUMBER(3, 0),
+    CODPROF                 NUMBER(5, 0),
+    CONCENTEST              NUMBER(5, 0),
+    NOMBREINST              VARCHAR2(80),
+    FECCAP                  DATE,
+    DESCAP                  VARCHAR2(500),
+    FECINI                  DATE,
+    FECFIN                  DATE,
+    NROMESES                NUMBER(2, 0),
+    FLGESCANEO              VARCHAR2(1),
+    VIGENTE                 VARCHAR(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_CAPACITACION.CODPERS IS '1: Reservado para la empresa MATRIZ';
+COMMENT ON COLUMN SYSCANVAS.T_CAPACITACION.CODGRADO IS '1: Bachiller
+2: Titulo 3: Maestria 4: Doctorado 5: Diplomado 6: Curso 7: Tecnico 8: Otros';
+COMMENT ON COLUMN SYSCANVAS.T_CAPACITACION.FLGESCANEO IS '1: Escaneado';
+
+CREATE TABLE SYSCANVAS.T_CARGO (
+    CODCARGO                NUMBER(4,0), 
+	DESCARGO                VARCHAR2(100), 
+	FLGMIEMPRESA            VARCHAR2(1), 
+	VIGENCIA                VARCHAR2(1), 
+	SINONIMOCARGO           VARCHAR2(2000)
+);
+COMMENT ON COLUMN SYSCANVAS.T_CARGO.FLGMIEMPRESA IS '0: Mi Empresa 1. Otra empresa';
+
+CREATE TABLE SYSCANVAS.T_CAT_FOTO (
+    CODPYTO                 NUMBER(6,0), 
+	CODRUTAPY               NUMBER(4,0), 
+	NROVERSION              NUMBER(2,0), 
+	COD_FOTO                NUMBER(6,0), 
+	NOMFOTO                 VARCHAR2(500), 
+	FECREG                  DATE, 
+	RESPONSABLE             VARCHAR2(50), 
+	OBSERVACION             VARCHAR2(2000), 
+	URI                     VARCHAR2(255), 
+	ID                      NUMBER
+);
+COMMENT ON COLUMN SYSCANVAS.T_CAT_FOTO.NROVERSION IS 'Version 2';
+
+CREATE TABLE SYSCANVAS.T_CAT_VIDEO (
+    CODPYTO                 NUMBER(6,0), 
+	CODRUTAPY               NUMBER(4,0), 
+	NROVERSION              NUMBER(2,0), 
+	COD_VIDEO               NUMBER(6,0), 
+	NOMVIDEO                VARCHAR2(500), 
+	FECREG                  DATE, 
+	RESPONSABLE             VARCHAR2(50), 
+	DURACION                NUMBER(9,2), 
+	OBSERVACION             VARCHAR2(2000), 
+    URI                     VARCHAR2(255), 
+    ID                      NUMBER
+);
+COMMENT ON COLUMN SYSCANVAS.T_CAT_VIDEO.NROVERSION IS 'Version 2';
+COMMENT ON COLUMN SYSCANVAS.T_CAT_VIDEO.DURACION IS 'Duracion en Min';
+
+CREATE TABLE SYSCANVAS.T_CENTROESTUDIO (
+    CODCENTEST              NUMBER(5,0), 
+    DESCCENTEST             VARCHAR2(100), 
+    VIGENTE                 VARCHAR2(1)
+);
+
+-- *** NUEVO ***
+/*CREATE TABLE SYSCANVAS.T_CIA (
+	CODCIA					NUMBER(6),
+	DESCIA					VARCHAR2(100),
+	DESCORTA				VARCHAR2(100),
+	VIGENTE					VARCHAR2(1)
+);*/
+
+CREATE TABLE SYSCANVAS.T_CLIENTE ( 
+    CODPERSONA              NUMBER(6,0), 
+	NRORUC                  VARCHAR2(20), 
+	CODDPTO                 VARCHAR2(2), 
+	CODPROV                 VARCHAR2(2), 
+	CODDIST                 VARCHAR2(2), 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_CONTRATO ( 
+    NROCONTRATO             NUMBER(5,0), 
+	CODPYTO                 NUMBER(6,0), 
+	NROCONV                 NUMBER(6,0), 
+	NUMCONTRATO             VARCHAR2(40), 
+    FECCONTRATO             DATE, 
+	FECINI                  DATE, 
+	FECFIN                  DATE, 
+	FECINIREAL              DATE, 
+	FECFINREAL              DATE, 
+	FLGFIELCUMPLIMIENTO     VARCHAR2(1), 
+	FECINIFIELCUM           DATE, 
+	FECFINFIELCUM           DATE, 
+	FLGRECUPERACIONFIELCUM  VARCHAR2(1), 
+	CODASEGFIELCUM          NUMBER(6,0), 
+	CODBROKERFIELCUM        NUMBER(6,0), 
+	IMPORTEFIELCUM          NUMBER(12,2), 
+	COMISIONASEGFIELCUM     NUMBER(12,2), 
+	COMISIONBROKERFIELCUM   NUMBER(12,2), 
+	FLGADELANTO             VARCHAR2(1), 
+	CODASEGADEL             NUMBER(6,0), 
+	CODBROKERADEL           NUMBER(6,0), 
+	IMPORTEADEL             NUMBER(12,2), 
+	COMISIONASEGADEL        NUMBER(12,2), 
+	COMISIONBROKERADEL      NUMBER(12,2), 
+	FECINIADEL              DATE, 
+	FECFINADEL              DATE, 
+	FLGRECUPERACIONADEL     VARCHAR2(1), 
+	OBSERVAC                VARCHAR2(2000), 
+	VIGENCIA                VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_CONTRATO.NROCONTRATO IS 'Correlativo de contrato';
+COMMENT ON COLUMN SYSCANVAS.T_CONTRATO.NUMCONTRATO IS 'Numero de contrato largo';
+COMMENT ON COLUMN SYSCANVAS.T_CONTRATO.FLGFIELCUMPLIMIENTO IS '0: No tiene Carta fianza de fiel cumplimiento.
+1: Si tiene Carta fianza de fiel cumplimiento';
+COMMENT ON COLUMN SYSCANVAS.T_CONTRATO.FLGRECUPERACIONFIELCUM IS '0: No se recupero CFC
+1: Si se recupero CFC';
+
+CREATE TABLE SYSCANVAS.T_CONV_FECHAS ( 
+    NROCONV                 NUMBER(6,0), 
+	CODHITO                 NUMBER(4,0), 
+	FECINI                  DATE, 
+	FECFIN                  DATE, 
+	OBSERVAC                VARCHAR2(2000)
+);
+
+CREATE TABLE SYSCANVAS.T_CONVOCATORIA ( 
+    NROCONV                 NUMBER(6,0), 
+	CODPYTO                 NUMBER(6,0), 
+	NROPROCESO              VARCHAR2(40), 
+	DESCPROCESO             VARCHAR2(1000), 
+	CODEMPLEADO             NUMBER(6,0), 
+	CODCLIENTE              NUMBER(6,0), 
+	LUGARPRESENTACION       VARCHAR2(1000), 
+	NOMENCLATURA            VARCHAR2(100), 
+	CODOBJC                 NUMBER(2,0), 
+	RUTADOC1                VARCHAR2(300), 
+	RUTADOC2                VARCHAR2(300), 
+	OBSERVAC                VARCHAR2(2000)
+);
+COMMENT ON COLUMN SYSCANVAS.T_CONVOCATORIA.NROPROCESO IS 'NroProceso de Seleccion';
+COMMENT ON COLUMN SYSCANVAS.T_CONVOCATORIA.DESCPROCESO IS 'SERVICIO DE PINTADO DE MARCAS EN EL PAVIMENTO
+CARRETERA EMP . PE - 3S IZCUCHACA - HUANCAVELICA - PLAZAPATA - SANTA INES - RUMICHACA Y SANTA INES - CASTROVIRREYNA - PAMPANO.';
+COMMENT ON COLUMN SYSCANVAS.T_CONVOCATORIA.CODEMPLEADO IS '1: Reservado para la empresa MATRIZ';
+COMMENT ON COLUMN SYSCANVAS.T_CONVOCATORIA.CODCLIENTE IS 'Empresa Convoca';
+COMMENT ON COLUMN SYSCANVAS.T_CONVOCATORIA.LUGARPRESENTACION IS 'Lugar, Hora y modo de presentacion';
+COMMENT ON COLUMN SYSCANVAS.T_CONVOCATORIA.NOMENCLATURA IS 'AS-SM-1-2018-MTC/20.UZHVCA-1';
+COMMENT ON COLUMN SYSCANVAS.T_CONVOCATORIA.CODOBJC IS '1. Bien 2. Consultoria de obra 3. Servicio';
+
+CREATE TABLE SYSCANVAS.T_CRITERIO_TRAMIF ( 
+    CODCRITERIO             VARCHAR2(2), 
+	DENCRRITERIO            VARCHAR2(30), 
+	VIGENCIA                VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_DEPARTAMENTO ( 
+    CODDPTO                 VARCHAR2(2), 
+	DESDPTO                 VARCHAR2(50), 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_DISTRITO (
+    CODDPTO                 VARCHAR2(2), 
+	CODPROV                 VARCHAR2(2), 
+	CODDIST                 VARCHAR2(2), 
+	DESDIST                 VARCHAR2(50), 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_DOCUMENTO (
+    CODPYTO                 NUMBER(6,0), 
+	CODENTREGABLE           NUMBER(5,0), 
+	CODPAQUETE              NUMBER(5,0), 
+	CODDOC                  NUMBER(5,0), 
+	DENDOC                  VARCHAR2(100), 
+	IDDOCUM                 NUMBER(6,0), 
+	FECREG                  DATE DEFAULT SYSDATE, 
+	RUTA1                   VARCHAR2(1000), 
+	RUTA2                   VARCHAR2(1000), 
+	TIPDOC                  NUMBER(4,0), 
+	RESUMENDOC              VARCHAR2(2000), 
+	VIGENTE                 VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_DOCUMENTO.RUTA1 IS 'Google Drive';
+COMMENT ON COLUMN SYSCANVAS.T_DOCUMENTO.RUTA2 IS 'Disco duro';
+
+CREATE TABLE SYSCANVAS.T_EMPLEADO (
+    CODPERS                 NUMBER(6,0), 
+	DIRECC                  VARCHAR2(100), 
+	HOBBY                   VARCHAR2(2000), 
+	FOTO                    BLOB, 
+	FECNAC                  DATE, 
+	DNI                     VARCHAR2(20), 
+	NROCIP                  VARCHAR2(10), 
+	FECCIPVIG               DATE, 
+	LICCOND                 VARCHAR2(1), 
+	OBSERVAC                VARCHAR2(300), 
+	CODCARGO                NUMBER(4,0), 
+	VIGENTE                 VARCHAR2(1), 
+	EMAIL                   VARCHAR2(100), 
+	FLGEMPLIEA              VARCHAR2(1), 
+	CELULAR                 VARCHAR2(10), 
+	NOMBRE                  VARCHAR2(100), 
+	APELLIDO                VARCHAR2(100),
+	PASSWORD				VARCHAR2(255)
+);
+COMMENT ON COLUMN SYSCANVAS.T_EMPLEADO.CODPERS IS '1: Reservado para la empresa MATRIZ';
+COMMENT ON COLUMN SYSCANVAS.T_EMPLEADO.LICCOND IS '1: Si tiene';
+COMMENT ON COLUMN SYSCANVAS.T_EMPLEADO.VIGENTE IS 'Vigente 1';
+COMMENT ON COLUMN SYSCANVAS.T_EMPLEADO.PASSWORD IS 'Contraseña encriptada';
+
+CREATE TABLE SYSCANVAS.T_EMPRESA (
+    CODPERSONA              NUMBER(6,0), 
+    NRORUC                  VARCHAR2(20), 
+	FLGEMPCONSORCIO         VARCHAR2(1), 
+	FECINI                  DATE, 
+	FECFIN                  DATE, 
+	VIGENTE                 VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_EMPRESA.FLGEMPCONSORCIO IS '0: Empresa Devenco 1: Consorcio';
+COMMENT ON TABLE SYSCANVAS.T_EMPRESA  IS '0: Empresa Devenco 1: Consorcio';
+
+CREATE TABLE SYSCANVAS.T_ENTREGABLE (
+    CODPYTO                 NUMBER(6,0), 
+	CODENTREGABLE           NUMBER(5,0), 
+	DENENTREGABLE           VARCHAR2(100), 
+	DENCORTA                VARCHAR2(20), 
+	FECREG                  DATE, 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_ESTADO (
+    ESTPYTO                 NUMBER(2,0), 
+	CODFASE                 NUMBER(1,0), 
+	CODNIVEL                NUMBER(2,0), 
+	DESESTADO               VARCHAR2(30)
+);
+COMMENT ON TABLE SYSCANVAS.T_ESTADO IS 'De acuerdo al Nivel 1: Registrado
+2. Aprobado 3. Viable 4. Observado';
+
+CREATE TABLE SYSCANVAS.T_EXPERIENCIA (
+    CODPERS                 NUMBER(6,0), 
+	CORREXP                 NUMBER(3,0), 
+	LUGARTRABAJO            VARCHAR2(100), 
+	DESTRABAJO              VARCHAR2(2000), 
+	CONTRATO                VARCHAR2(400), 
+	FECINI                  DATE, 
+	FECFIN                  DATE, 
+	NROMESES                NUMBER(3,0), 
+	NRODIAS                 NUMBER(2,0), 
+	MOTIVORETIRO            VARCHAR2(30), 
+	CODPROF                 NUMBER(5,0), 
+	VIGENTE                 VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_EXPERIENCIA.CODPERS IS '1: Reservado para la empresa MATRIZ';
+COMMENT ON COLUMN SYSCANVAS.T_EXPERIENCIA.LUGARTRABAJO IS 'Empresa que extiende la constancia de trabajo';
+COMMENT ON COLUMN SYSCANVAS.T_EXPERIENCIA.CONTRATO IS 'Descripci?n del contrato';
+COMMENT ON TABLE SYSCANVAS.T_EXPERIENCIA IS 'Experiencia del personal de Devenco o Consorcio';
+
+CREATE TABLE SYSCANVAS.T_FASE (
+    CODFASE                 NUMBER(1,0), 
+	DESFASE                 VARCHAR2(30), 
+	VIGENCIA                VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_FASE.VIGENCIA IS 'Vigente 1';
+
+CREATE TABLE SYSCANVAS.T_FLUJOCAJA (
+    CODPYTO                 NUMBER(6,0), 
+	TIPO                    VARCHAR2(1), 
+	INGEGR                  VARCHAR2(1), 
+	NIVEL                   NUMBER(1,0), 
+	CORR                    NUMBER(5,0), 
+	DESCONCEPTO             VARCHAR2(30), 
+	DESCONCEPTOCORTO        VARCHAR2(10), 
+	ORDEN                   NUMBER(5,0), 
+	SEMILLA                 NUMBER(5,0), 
+	RAIZ                    NUMBER(5,0)
+);
+COMMENT ON COLUMN SYSCANVAS.T_FLUJOCAJA.TIPO IS 'P: Flujo de caja proyectado R: Flujo de caja real';
+COMMENT ON COLUMN SYSCANVAS.T_FLUJOCAJA.INGEGR IS 'I; Ingreso E: Egreso';
+COMMENT ON COLUMN SYSCANVAS.T_FLUJOCAJA.NIVEL IS 'Solo dos niveles';
+
+CREATE TABLE SYSCANVAS.T_FLUJOCAJA_DET (
+    ANNO                    NUMBER(4,0), 
+	CODPYTO                 NUMBER(6,0), 
+	TIPO                    VARCHAR2(1), 
+	INGEGR                  VARCHAR2(1), 
+	NIVEL                   NUMBER(1,0), 
+	CORR                    NUMBER(5,0), 
+	ORDEN                   NUMBER(5,0), 
+	IMPENE                  NUMBER(12,2), 
+	IMPFEB                  NUMBER(12,2), 
+	IMPMAR                  NUMBER(12,2), 
+	IMPABR                  NUMBER(12,2), 
+	IMPMAY                  NUMBER(12,2), 
+	IMPJUN                  NUMBER(12,2), 
+	IMPJUL                  NUMBER(12,2), 
+	IMPAGO                  NUMBER(12,2), 
+	IMPSET                  NUMBER(12,2), 
+	IMPOCT                  NUMBER(12,2), 
+	IMPNOV                  NUMBER(12,2), 
+	IMPDIC                  NUMBER(12,2)
+);
+COMMENT ON COLUMN SYSCANVAS.T_FLUJOCAJA_DET.TIPO IS 'P: Flujo de caja proyectado
+r: Flujo de caja real';
+COMMENT ON COLUMN SYSCANVAS.T_FLUJOCAJA_DET.NIVEL IS 'Solo dos niveles';
+
+CREATE TABLE SYSCANVAS.T_FUNCION (
+    CODFUNCION              VARCHAR2(4), 
+	DESFUNCION              VARCHAR2(50), 
+	VIGENTE                 VARCHAR2(1)
+);
+COMMENT ON TABLE SYSCANVAS.T_FUNCION IS '0001: Educación 0002: Transporte';
+
+CREATE TABLE SYSCANVAS.T_GPS_PYTO ( 
+    CODPYTO                 NUMBER(6,0), 
+	CODRUTAPY               NUMBER(4,0), 
+	CODTRAMOPY              NUMBER(4,0), 
+	NROVERSION              NUMBER(2,0), 
+	CORREL                  NUMBER(5,0), 
+	ORDEN                   NUMBER(3,0), 
+	LATITUD                 VARCHAR2(12), 
+	ALTITUD                 VARCHAR2(12), 
+	LONGITUD                VARCHAR2(12), 
+	PROGINI                 VARCHAR2(12), 
+	PROGFIN                 VARCHAR2(12), 
+	CODCRITERIO             VARCHAR2(2), 
+	SECUEN                  VARCHAR2(2000), 
+	OBSERV                  VARCHAR2(2000)
+);
+COMMENT ON TABLE SYSCANVAS.T_GPS_PYTO IS 'Informacion de campo del GPS';
+
+CREATE TABLE SYSCANVAS.T_GRADO (
+    CODGRADO                NUMBER(3,0), 
+	GRADO                   VARCHAR2(60), 
+	VIGENTE                 VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_GRADO.CODGRADO IS '1: Bachiller
+2: Titulo 3: Maestria 4: Doctorado 5: Diplomado 6: Curso 7: Tecnico 8: Otros';
+
+CREATE TABLE SYSCANVAS.T_HITOSCONV (
+    CODHITO                 NUMBER(4,0), 
+	DESCHITO                VARCHAR2(40), 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_ING_EGRESO (
+    INGEGR                  VARCHAR2(1), 
+	PERIODO                 NUMBER(4,0), 
+	CODCP                   NUMBER(3,0), 
+	NROCP                   VARCHAR2(20), 
+	CODPYTO                 NUMBER(6,0), 
+	DESPROVEEDOR            VARCHAR2(50), 
+	FECREG                  DATE, 
+	IMPUESTO                NUMBER(12,2), 
+	IMPTOTAL                NUMBER(12,2), 
+	NROPAGO                 NUMBER(3,0)
+);
+COMMENT ON COLUMN SYSCANVAS.T_ING_EGRESO.INGEGR IS 'I:Ingreso E: Egreso';
+COMMENT ON COLUMN SYSCANVAS.T_ING_EGRESO.PERIODO IS 'ANNO DEL CP';
+COMMENT ON COLUMN SYSCANVAS.T_ING_EGRESO.NROPAGO IS 'Nro Pago --- Ingreso
+El Gasto a que Nro de pago se carga';
+
+CREATE TABLE SYSCANVAS.T_INGEGRESO_DET (
+    INGEGR                  VARCHAR2(1), 
+	PERIODO                 NUMBER(4,0), 
+	CODCP                   NUMBER(3,0), 
+	NROCP                   VARCHAR2(20), 
+	CORRE                   NUMBER(4,0), 
+	CODPARTIDAI             NUMBER(6,0), 
+	DESCP                   VARCHAR2(300), 
+	IDMON                   NUMBER(4,0), 
+	IMPMO                   NUMBER(12,2), 
+	TIPCAMBIO               NUMBER(7,4), 
+	IMPMN                   NUMBER(12,2), 
+	IMPUESTO                NUMBER(12,2), 
+	SEMILLA1                NUMBER(5,0), 
+	SEMILLA2                NUMBER(5,0), 
+	NROVERSION              NUMBER(1,0)
+);
+COMMENT ON COLUMN SYSCANVAS.T_INGEGRESO_DET.INGEGR IS 'I:Ingreso E: Egreso';
+COMMENT ON COLUMN SYSCANVAS.T_INGEGRESO_DET.IMPMN IS 'Importe moneda nacional - Flujo de caja';
+COMMENT ON COLUMN SYSCANVAS.T_INGEGRESO_DET.SEMILLA1 IS 'Semilla 1: Ingresos y Egresos';
+COMMENT ON COLUMN SYSCANVAS.T_INGEGRESO_DET.SEMILLA2 IS 'Semilla 2: Egresos';
+
+CREATE TABLE SYSCANVAS.T_MONEDA (
+    IDMON                   NUMBER(4,0) GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE
+                                        9999999999999999999999999999 INCREMENT BY 1 START
+                                        WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE , 
+	DENMON                  VARCHAR2(30), 
+	SIMBOLO                 VARCHAR2(4), 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_NIVEL (
+    CODFASE                 NUMBER(1,0), 
+	CODNIVEL                NUMBER(2,0), 
+	DESNIVEL                VARCHAR2(30), 
+	VIGENTE                 VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_NIVEL.DESNIVEL IS '1: Perfl 2: Factibilidad 3: Estudio Definitivo
+4: Obra';
+COMMENT ON COLUMN SYSCANVAS.T_NIVEL.VIGENTE IS 'Vigente 1';
+COMMENT ON TABLE SYSCANVAS.T_NIVEL  IS '1: Perfil 2: Factibilidad 3: Estudio Definitivo 4: Obra';
+
+CREATE TABLE SYSCANVAS.T_OBJCONTRAT (
+    CODOBJC                 NUMBER(2,0), 
+	DESCOBJETO              VARCHAR2(40), 
+	VIGENTE                 VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_OBJCONTRAT.CODOBJC IS '1. Bien 2. Consultoria de obra 3. Servicio 4. Obra';
+
+CREATE TABLE SYSCANVAS.T_PAQUETE (
+    CODPYTO                 NUMBER(6,0), 
+	CODENTREGABLE           NUMBER(5,0), 
+	CODPAQUETE              NUMBER(5,0), 
+	DENPAQUETE              VARCHAR2(100), 
+	DENCORTA                VARCHAR2(20), 
+	FECREG                  DATE, 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_PARTIDAEGR_1 (
+    IDCC                    NUMBER(6,0), 
+	CODCC                   VARCHAR2(12), 
+	DESCC                   VARCHAR2(30), 
+	FLGCC                   VARCHAR2(1), 
+	NIVEL                   NUMBER(2,0), 
+	UNIMED                  VARCHAR2(5), 
+	SEMILLA                 NUMBER(5,0), 
+	IDCCPADRE               NUMBER(6,0), 
+	VIGENTE                 VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_PARTIDAEGR_1.CODCC IS 'Formato del codigo xxx.xxx.xxxx';
+COMMENT ON COLUMN SYSCANVAS.T_PARTIDAEGR_1.FLGCC IS '1: Codigo de la primera version
+2: Codigo de la segunda version';
+
+CREATE TABLE SYSCANVAS.T_PARTIDAING (
+    INGEGR                  VARCHAR2(1), 
+	CODPARTIDAI             NUMBER(6,0), 
+	CODPARINGR              VARCHAR2(12), 
+	DESPARTIDA              VARCHAR2(30), 
+	FLGCC                   VARCHAR2(1), 
+	NIVEL                   NUMBER(2,0), 
+	UNIMED                  VARCHAR2(5), 
+	SEMILLA                 NUMBER(5,0), 
+	VIGENTE                 VARCHAR2(1), 
+	PARENT_INGEGR           VARCHAR2(1), 
+	IDCCPADRE               NUMBER(6,0)
+);
+COMMENT ON COLUMN SYSCANVAS.T_PARTIDAING.INGEGR IS 'I:Ingreso E: Egreso';
+COMMENT ON COLUMN SYSCANVAS.T_PARTIDAING.CODPARINGR IS 'Formato del codigo xxx.xxx.xxxx';
+COMMENT ON COLUMN SYSCANVAS.T_PARTIDAING.FLGCC IS '1: Codigo de la primera version
+2: Codigo de la segunda version';
+
+CREATE TABLE SYSCANVAS.T_PERSONA (
+    CODPERSONA              NUMBER(6,0), 
+	TIPPERSONA              VARCHAR2(1), 
+	DESPERSONA              VARCHAR2(100), 
+	DESCORTA                VARCHAR2(30)
+);
+COMMENT ON COLUMN SYSCANVAS.T_PERSONA.TIPPERSONA IS '0: Empresa o Consorcio 1: Empleado Devenco 2: Cliente';
+
+CREATE TABLE SYSCANVAS.T_PERSPROFESION (
+    CODPERS                 NUMBER(6,0), 
+	CORRPROF                NUMBER(3,0), 
+	CODGRADO                NUMBER(3,0), 
+	CODPROF                 NUMBER(5,0), 
+	CODCENTEST              NUMBER(5,0), 
+	NROCIP                  VARCHAR2(10), 
+	DENCOLPROF              VARCHAR2(80), 
+	FECCIPVIG               DATE, 
+	FECTITULO               DATE, 
+	FECBACHILLER            DATE, 
+	FECCOLEGIATURA          DATE, 
+	FLGESCANEO              VARCHAR2(1), 
+	VIGENTE                 VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_PERSPROFESION.CODPERS IS '1: Reservado para la empresa MATRIZ';
+COMMENT ON COLUMN SYSCANVAS.T_PERSPROFESION.CODGRADO IS '1: Bachiller 2: Titulo 3: Maestria 4: Doctorado
+5: Diplomado 6: Curso 7: Tecnico 8: Otros';
+COMMENT ON COLUMN SYSCANVAS.T_PERSPROFESION.CODPROF IS '1: Bachiller 2: Titulo';
+COMMENT ON COLUMN SYSCANVAS.T_PERSPROFESION.DENCOLPROF IS 'Denominacion del Colegio Profesional';
+COMMENT ON COLUMN SYSCANVAS.T_PERSPROFESION.FLGESCANEO IS '1: Titulo escaneado';
+COMMENT ON COLUMN SYSCANVAS.T_PERSPROFESION.VIGENTE IS 'Vigente 1';
+
+CREATE TABLE SYSCANVAS.T_PRESINGRESO (
+    CODPYTO                 NUMBER(6,0), 
+	NROVERSION              NUMBER(1,0), 
+	FECREG                  DATE, 
+	COSDIR                  NUMBER(12,2), 
+	GASGGFIN                NUMBER(12,2), 
+	IMPUTILIDAD             NUMBER(12,2), 
+	IMPTOTSINIGV            NUMBER(12,2), 
+	IMPCONIGV               NUMBER(12,2), 
+	IMPTOTAL                NUMBER(12,2)
+);
+
+CREATE TABLE SYSCANVAS.T_PRESINGRESO_DET (
+    CODPYTO                 NUMBER(6,0), 
+	NROVERSION              NUMBER(1,0), 
+	INGEGR                  VARCHAR2(1), 
+	CODPARTIDAI             NUMBER(6,0), 
+	IDMON                   NUMBER(4,0), 
+	IMPMO                   NUMBER(12,2), 
+	TIPCAMBIO               NUMBER(7,4), 
+	IMPMN                   NUMBER(12,2), 
+	CANT                    NUMBER(8,3), 
+	PERIODO                 NUMBER(4,0), 
+	SEMILLA1                NUMBER(5,0), 
+	SEMILLA2                NUMBER(5,0)
+);
+COMMENT ON COLUMN SYSCANVAS.T_PRESINGRESO_DET.SEMILLA2 IS 'Version 1 es nulo Version 2 tiene valor';
+
+CREATE TABLE SYSCANVAS.T_PROFESIONES (
+    CODPROF                 NUMBER(5,0), 
+	DESPROF                 VARCHAR2(30), 
+	VIGENTE                 VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_PROFESIONES.DESPROF IS 'Ingeniero Civil';
+COMMENT ON COLUMN SYSCANVAS.T_PROFESIONES.VIGENTE IS 'Vigente 1';
+COMMENT ON TABLE SYSCANVAS.T_PROFESIONES  IS '1: Ing. Civil 2: Especialista Suelos
+3: Maestria en geotecnia 4: Dr. Ing. Civil';
+
+CREATE TABLE SYSCANVAS.T_PROVINCIA (
+    CODDPTO                 VARCHAR2(2), 
+	CODPROV                 VARCHAR2(2), 
+	DESPROV                 VARCHAR2(50), 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_PROYECTO (
+    CODPYTO                 NUMBER(6,0), 
+	CODSNIP                 VARCHAR2(10), 
+	FECREG                  DATE, 
+	CODFASE                 NUMBER(1,0), 
+	CODNIVEL                NUMBER(2,0), 
+	CODFUNCION              VARCHAR2(4), 
+	CODTAXONOMIA            NUMBER(1,0), 
+	CODSITUACION            NUMBER(2,0), 
+	NUMINFOR                NUMBER(1,0), 
+	NUMINFORENTRG           NUMBER(1,0), 
+	ESTPYTO                 NUMBER(2,0), 
+	FECESTADO               DATE, 
+	CODCONSORCIO            NUMBER(6,0), 
+	NOMPYTO                 VARCHAR2(1000), 
+	CODCLIENTE              NUMBER(6,0), 
+	EMPLJEFEPROJ            NUMBER(6,0), 
+	COSTOTOTAL              NUMBER(12,2), 
+	COSTODIRECTO            NUMBER(12,2), 
+	COSTOGGEN               NUMBER(12,2), 
+	COSTOIMP                NUMBER(12,2), 
+	COSTOPENALID            NUMBER(12,2), 
+	CODDPTO                 VARCHAR2(2), 
+	CODPROV                 VARCHAR2(2), 
+	CODDIST                 VARCHAR2(2), 
+	FECVIAB                 DATE, 
+	OBSERVAC                VARCHAR2(500), 
+	RUTADOC                 VARCHAR2(300), 
+	CODOBJC                 NUMBER(2,0), 
+	LOGOPROY                BLOB, 
+	VIGENTE                 VARCHAR2(1), 
+	ANNOINI                 NUMBER(4,0), 
+	ANNOFIN                 NUMBER(4,0)
+);
+COMMENT ON COLUMN SYSCANVAS.T_PROYECTO.CODSNIP IS 'Código SNIP';
+COMMENT ON COLUMN SYSCANVAS.T_PROYECTO.CODCLIENTE IS 'Cliente - Pliego UF Municipalidad Ministerio';
+COMMENT ON COLUMN SYSCANVAS.T_PROYECTO.EMPLJEFEPROJ IS 'Jefe de proyecto';
+COMMENT ON COLUMN SYSCANVAS.T_PROYECTO.COSTOTOTAL IS 'Costo total del Pyto';
+COMMENT ON COLUMN SYSCANVAS.T_PROYECTO.COSTOGGEN IS 'Gastos Generales';
+COMMENT ON COLUMN SYSCANVAS.T_PROYECTO.COSTOIMP IS 'Impuestos de Ley';
+COMMENT ON COLUMN SYSCANVAS.T_PROYECTO.COSTOPENALID IS 'Penalidades';
+COMMENT ON COLUMN SYSCANVAS.T_PROYECTO.RUTADOC IS 'Documentos del Proyecto';
+COMMENT ON COLUMN SYSCANVAS.T_PROYECTO.CODOBJC IS '1. Bien 2. Consultoria de obra 3. Servicio';
+COMMENT ON COLUMN SYSCANVAS.T_PROYECTO.LOGOPROY IS 'Logo del Proyecto';
+COMMENT ON COLUMN SYSCANVAS.T_PROYECTO.VIGENTE IS 'Vigente 1 No Vigente 0';
+
+CREATE TABLE SYSCANVAS.T_PYTOCLIENTESP (
+    CODPYTO                 NUMBER(6,0), 
+	CORREMPL                NUMBER(5,0), 
+	CODCLIENTE              NUMBER(6,0), 
+	DESPERSONA              VARCHAR2(100), 
+	CODCARGO                NUMBER(4,0), 
+	FECINI                  DATE, 
+	FECFIN                  DATE, 
+	FLGEMPLJEF              VARCHAR2(1), 
+	COSTO                   NUMBER(8,2), 
+	DESQTRAB                VARCHAR2(1000), 
+	OBSERVAC                VARCHAR2(800), 
+	VIGENTE                 VARCHAR2(1)
+);
+COMMENT ON COLUMN SYSCANVAS.T_PYTOCLIENTESP.DESPERSONA IS 'Nombre del Especialista';
+COMMENT ON COLUMN SYSCANVAS.T_PYTOCLIENTESP.FLGEMPLJEF IS '0: No es Adm. Contrato 1: Es Adm. Contrato';
+COMMENT ON COLUMN SYSCANVAS.T_PYTOCLIENTESP.DESQTRAB IS 'Calidad del Trabajo';
+
+CREATE TABLE SYSCANVAS.T_PYTOHITOS (
+    CODPYTO                 NUMBER(6,0), 
+	DESHITO                 VARCHAR2(70), 
+	FECFIN                  DATE, 
+	CUMPLITO                VARCHAR2(1), 
+	FECINICIO               DATE, 
+	OBSERVAC                VARCHAR2(1000)
+);
+COMMENT ON COLUMN SYSCANVAS.T_PYTOHITOS.CUMPLITO IS 'Vigente 1';
+
+CREATE TABLE SYSCANVAS.T_PYTOPERS (
+    CODPYTO                 NUMBER(6,0), 
+	CORREMPL                NUMBER(5,0), 
+	CODCARGO                NUMBER(4,0), 
+	FECINI                  DATE, 
+	FECFIN                  DATE, 
+	FLGEMPLJEF              VARCHAR2(1), 
+	COSTO                   NUMBER(8,2), 
+	DESQTRAB                VARCHAR2(1000), 
+	OBSERVAC                VARCHAR2(800), 
+	CODPERS                 NUMBER(6,0), 
+	VIGENTE                 VARCHAR2(1), 
+	EMAIL                   VARCHAR2(100), 
+	CELULAR                 NUMBER(33,0), 
+	FLGPYEMPIE              VARCHAR2(100)
+);
+COMMENT ON COLUMN SYSCANVAS.T_PYTOPERS.FLGEMPLJEF IS '0: No es Jefe 1: Es Jefe';
+COMMENT ON COLUMN SYSCANVAS.T_PYTOPERS.DESQTRAB IS 'Calidad del Trabajo';
+COMMENT ON COLUMN SYSCANVAS.T_PYTOPERS.CODPERS IS '1: Reservado para la empresa MATRIZ';
+
+CREATE TABLE SYSCANVAS.T_RESULCONV (
+    NROCONV                 NUMBER(6,0), 
+	CORRCONV                NUMBER(2,0), 
+	EMPRESA                 VARCHAR2(200), 
+	GANADOR                 VARCHAR2(1), 
+	EVALTEC                 NUMBER(5,2), 
+	EVALECON                NUMBER(5,2), 
+	OBSERVAC                VARCHAR2(2000)
+);
+COMMENT ON COLUMN SYSCANVAS.T_RESULCONV.EMPRESA IS 'Denominación Empresa';
+COMMENT ON COLUMN SYSCANVAS.T_RESULCONV.GANADOR IS '0: No Gana 1: Gana';
+
+CREATE TABLE SYSCANVAS.T_RUTA (
+    CODPYTO                 NUMBER(6,0), 
+	CODRUTAPY               NUMBER(4,0), 
+	NROVERSION              NUMBER(2,0), 
+	CODRUTA                 VARCHAR2(20), 
+	FECHAREGISTRO           DATE, 
+	DENOMINACIONRUTA        VARCHAR2(100), 
+	DENOMINACIONCORTORUTA   VARCHAR2(100), 
+	NROKMS                  NUMBER(13,5), 
+	ZONAGPS                 VARCHAR2(25), 
+	PROGINICIO              VARCHAR2(25), 
+	PROGFINAL               VARCHAR2(25), 
+	LATITUDINICIORUTA       VARCHAR2(25), 
+	LATITUDFINALRUTA        VARCHAR2(25), 
+	LONGITUDINICIORUTA      VARCHAR2(25), 
+	LONGITUDFINALRUTA       VARCHAR2(25), 
+	ALTITUDINICIORUTA       VARCHAR2(25), 
+	ALTITUDFINALRUTA        VARCHAR2(25), 
+	OBSERVACIONRUTA         VARCHAR2(500), 
+	VIGENCIA                VARCHAR2(1), 
+	ELABORADOPOR            NUMBER(6,0)
+);
+COMMENT ON COLUMN SYSCANVAS.T_RUTA.CODRUTA IS 'AN-300 Q800 2340';
+COMMENT ON COLUMN SYSCANVAS.T_RUTA.NROKMS IS 'Longuitud de la ruta. 80.25540 Kms';
+COMMENT ON COLUMN SYSCANVAS.T_RUTA.PROGINICIO IS '0+100';
+COMMENT ON COLUMN SYSCANVAS.T_RUTA.PROGFINAL IS '120+300';
+COMMENT ON COLUMN SYSCANVAS.T_RUTA.VIGENCIA IS 'Vigente 1 No Vigente 0';
+
+CREATE TABLE SYSCANVAS.T_SITUACION (
+    CODFASE                 NUMBER(1,0), 
+	CODNIVEL                NUMBER(2,0), 
+	CODSITUACION            NUMBER(2,0), 
+	DESSITUACION            VARCHAR2(60), 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_SUBTRAMO (
+    CODPYTO                     NUMBER(6,0), 
+	CODRUTAPY                   NUMBER(4,0), 
+	CODTRAMOPY                  NUMBER(4,0), 
+	CODSUBTRAMOPY               NUMBER(4,0), 
+	NROVERSION                  NUMBER(2,0), 
+	CODSUBTRAMO                 VARCHAR2(20), 
+	FECHAREGISTRO               DATE, 
+	DENOMINACIONSUBTRAMO        VARCHAR2(100), 
+	DENOMINACIONCORTOSUBTRAMO   VARCHAR2(100), 
+	NROKMSSUBTRAMO              NUMBER(13,5), 
+	ZONAGPS                     VARCHAR2(25), 
+	PROGINICIO                  VARCHAR2(25), 
+	PROGFIN                     VARCHAR2(25), 
+	LATITUDINICIOSUBTRAMO       VARCHAR2(25), 
+	LATITUDFINALSUBTRAMO        VARCHAR2(25), 
+	LONGITUDINICIOSUBTRAMO      VARCHAR2(25), 
+	LONGITUDFINALSUBTRAMO       VARCHAR2(25), 
+	ALTITUDINICIOSUBTRAMO       VARCHAR2(25), 
+	ALTITUDFINALSUBTRAMO        VARCHAR2(25), 
+	OBSERVACIONSUBTRAMO         VARCHAR2(500), 
+	VIGENCIA                    VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_TAXONOMIA (
+    CODFUNCION              VARCHAR2(4), 
+	CODTAXONOMIA            NUMBER(1,0), 
+	DESTAX                  VARCHAR2(30), 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_TIPO_CP (
+    CODCP                   NUMBER(3,0) GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE
+                                        9999999999999999999999999999 INCREMENT BY 1 START
+                                        WITH 2 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE , 
+	DENLCP                  VARCHAR2(20), 
+	DENCCP                  VARCHAR2(10), 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_TIPO_DOC (
+    TIPDOC                  NUMBER(4,0), 
+	DENDOC                  VARCHAR2(100), 
+	DENCORTA                VARCHAR2(20), 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_TIPOINTERVENC (
+    TIPINTERV               VARCHAR2(2), 
+	DENINTERV               VARCHAR2(40), 
+	DENCORINTERV            VARCHAR2(10), 
+	VIGENCIA                VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_TIPOPAVIMENTO (
+    TIPPAV                  VARCHAR2(2), 
+	DENPAV                  VARCHAR2(30), 
+	VIGENCIA                VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_TIPO_PERSONA (
+    TIPPERSONA              VARCHAR2(1), 
+	DENTIPPERSONA           VARCHAR2(30), 
+	VIGENTE                 VARCHAR2(1)
+);
+
+CREATE TABLE SYSCANVAS.T_TRAMO (
+    CODPYTO                 NUMBER(6,0), 
+	CODRUTAPY               NUMBER(4,0), 
+	CODTRAMOPY              NUMBER(4,0), 
+	NROVERSION              NUMBER(2,0), 
+	CODTRAMO                VARCHAR2(20), 
+	FECHAREGISTRO           DATE, 
+	DENOMINACIONTRAMO       VARCHAR2(100), 
+	DENOMINACIONCORTOTRAMO  VARCHAR2(100), 
+	NROKMSTRAMO             NUMBER(13,5), 
+	ZONAGPS                 VARCHAR2(25), 
+	PROGINICIO              VARCHAR2(25), 
+	PROGFIN                 VARCHAR2(25), 
+	LATITUDINICIOTRAMO      VARCHAR2(25), 
+	LATITUDFINALTRAMO       VARCHAR2(25), 
+	LONGITUDINICIOTRAMO     VARCHAR2(25), 
+	LONGITUDFINALTRAMO      VARCHAR2(25), 
+	ALTITUDINICIOTRAMO      VARCHAR2(25), 
+	ALTITUDFINALTRAMO       VARCHAR2(25), 
+	OBSERVACIONTRAMO        VARCHAR2(500), 
+	VIGENCIA                VARCHAR2(1), 
+	ID                      NUMBER(6,0)
+);
+
+CREATE TABLE SYSCANVAS.T_TRAMO_GPS_PREL (
+    CODPYTO                 NUMBER(6,0), 
+	CODRUTA                 NUMBER(2,0), 
+	CODTRAMO                NUMBER(2,0), 
+	CODVERSION              NUMBER(1,0), 
+	CORREL                  NUMBER(5,0), 
+	ORDEN                   NUMBER(3,0), 
+	LATITUD                 VARCHAR2(12), 
+	LONGITUD                VARCHAR2(12), 
+	ALTITUD                 VARCHAR2(12), 
+	PROGINI                 VARCHAR2(12), 
+	PROGFIN                 VARCHAR2(12), 
+	OBSERV                  VARCHAR2(2000)
+);
+COMMENT ON TABLE SYSCANVAS.T_TRAMO_GPS_PREL  IS 'PUNTOS GPS x Tramo - Preliminar - GPS';
+
+CREATE TABLE SYSCANVAS.T_TRAMO_VIDEODET (
+    CODPYTO                 NUMBER(6,0), 
+	CODRUTAPY               NUMBER(2,0), 
+	CODTRAMOPY              NUMBER(2,0), 
+	NROVERSION              NUMBER(1,0), 
+	CORREL                  NUMBER(5,0), 
+	SECUEN                  NUMBER(5,0), 
+	ORDEN                   NUMBER(3,0), 
+	PROGINI                 VARCHAR2(12), 
+	PROGFIN                 VARCHAR2(12), 
+	INIVIDEO                NUMBER(10,2), 
+	DURVIDEO                NUMBER(10,2), 
+	DESCRIPCION             VARCHAR2(2000), 
+	TIPPAV                  VARCHAR2(2), 
+	TIPINTERV               VARCHAR2(2), 
+	OBSERVAC                VARCHAR2(2000), 
+	FLGVIGENCIA             VARCHAR2(1), 
+	ID                      NUMBER(6,0)
+);
+COMMENT ON COLUMN SYSCANVAS.T_TRAMO_VIDEODET.DURVIDEO IS 'Duracion del video expresado en Min';
+COMMENT ON COLUMN SYSCANVAS.T_TRAMO_VIDEODET.TIPPAV IS 'Afirmado Slurry';
+COMMENT ON COLUMN SYSCANVAS.T_TRAMO_VIDEODET.TIPINTERV IS 'Inversion Conservacion';
+COMMENT ON TABLE SYSCANVAS.T_TRAMO_VIDEODET  IS 'Inf del GPS-Video';
+
+CREATE TABLE SYSCANVAS.T_TRAMO_VIDEOF (
+    CODPYTO                 NUMBER(6,0), 
+	CODRUTAPY               NUMBER(4,0), 
+	CODTRAMOPY              NUMBER(4,0), 
+	NROVERSION              NUMBER(2,0), 
+	CORREL                  NUMBER(5,0), 
+	ORDEN                   NUMBER(3,0), 
+	PROGINI                 VARCHAR2(12), 
+	PROGFIN                 VARCHAR2(12), 
+	DESCRIPCION             VARCHAR2(2000), 
+	CODCRITERIO             VARCHAR2(2), 
+	TIPVIDEOFOTO            VARCHAR2(1), 
+	CODFOTOVIDEO            NUMBER(6,0), 
+	INIVIDEO                NUMBER(10,2), 
+	DURVIDEO                NUMBER(10,2), 
+	VIGENCIA                VARCHAR2(1), 
+	OBSERVACION             VARCHAR2(2000), 
+	ID                      NUMBER(6,0)
+);
+COMMENT ON COLUMN SYSCANVAS.T_TRAMO_VIDEOF.TIPVIDEOFOTO IS 'V: Video F: Foto';
+COMMENT ON COLUMN SYSCANVAS.T_TRAMO_VIDEOF.DURVIDEO IS 'Duracion del video expresado en Min 0: Si es foto';
+COMMENT ON TABLE SYSCANVAS.T_TRAMO_VIDEOF  IS 'Videos y Fotos x Tramo';
+
+CREATE TABLE SYSCANVAS.T_TRAMO_VIDEOF_PREL (
+    CODPYTO                 NUMBER(6,0), 
+	CODRUTA                 NUMBER(2,0), 
+	CODTRAMO                NUMBER(2,0), 
+	CODVERSION              NUMBER(1,0), 
+	CORREL                  NUMBER(5,0), 
+	ORDEN                   NUMBER(3,0), 
+	LATITUD                 VARCHAR2(12), 
+	LONGITUD                VARCHAR2(12), 
+	ALTITUD                 VARCHAR2(12), 
+	PROGINI                 VARCHAR2(12), 
+	PROGFIN                 VARCHAR2(12), 
+	CODCRITERIO             VARCHAR2(2), 
+	TIPVIDEOFOTO            VARCHAR2(1), 
+	SECUEN                  VARCHAR2(10), 
+	DURVIDEO                NUMBER(5,0), 
+	OBSERV                  VARCHAR2(2000)
+);
+COMMENT ON COLUMN SYSCANVAS.T_TRAMO_VIDEOF_PREL.TIPVIDEOFOTO IS 'V: Video F: Foto';
+COMMENT ON COLUMN SYSCANVAS.T_TRAMO_VIDEOF_PREL.DURVIDEO IS 'Duracion del video expresado en Min 0: Si es foto';
+COMMENT ON TABLE SYSCANVAS.T_TRAMO_VIDEOF_PREL  IS 'Videos y Fotos x Tramo - Preliminar - GPS - Foto - Video';

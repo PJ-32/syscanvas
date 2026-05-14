@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSCANVAS - Mi Progreso</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3.1.1/dist/iconify.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="has-sidebar reportes-wide">
+<body class="has-sidebar">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="iconify sidebar-logo" data-icon="noto:card-index-dividers"></span>
+                <div class="sidebar-title">SYSCANVAS</div>
+                <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="/html/inicio-analista.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="menu-text">Inicio</span>
+                </a>
+
+                <a href="/html/mi-progreso.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-chart-line"></i></span>
+                    <span class="menu-text">Mi Progreso</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="javascript:void(0)" onclick="logout()" class="menu-item-logout">
+                    <span class="menu-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+                    <span class="menu-text">Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div class="logo">📊 Mi Progreso Personal</div>
+                <div class="user-info">
+                    <span class="user-name" id="saludo-usuario">Cargando...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenedor -->
+        <div class="container">
+
+            <!-- Saludo -->
+            <div class="mb-4">
+                <h1 id="saludo-usuario" class="text-xl font-bold mb-2">Hola, Usuario 👋</h1>
+                <p class="text-gray">Aquí puedes ver tu desempeño y progreso personal</p>
+            </div>
+
+            <!-- Estadísticas Personales -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-tareas-completadas">0</div>
+                    <div class="stat-label">Tareas Completadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-tareas-pendientes">0</div>
+                    <div class="stat-label">Tareas Pendientes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-tasa-completitud">0%</div>
+                    <div class="stat-label">Tasa de Completitud</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-canvas-activos">0</div>
+                    <div class="stat-label">Canvas Activos</div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3 class="mb-3">📈 Mi Productividad Semanal</h3>
+                    <canvas id="chart-semanal" style="max-height: 300px;"></canvas>
+                </div>
+
+                <div class="card">
+                    <h3 class="mb-3">📊 Distribución de Tareas</h3>
+                    <canvas id="chart-distribucion" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+
+            <!-- Mis Canvas -->
+            <div class="card">
+                <h3 class="mb-3">📁 Mis Canvas Asignados</h3>
+                <div id="mis-canvas"></div>
+            </div>
+
+            <!-- Actividad Reciente -->
+            <div class="card">
+                <h3 class="mb-3">📝 Actividad Reciente</h3>
+                <div id="actividad-reciente"></div>
+            </div>
+
+            <!-- Loading -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p class="mt-2">Cargando datos...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/auth.js"></script>
+    <script src="/js/mi-progreso.js"></script>
+    <script src="/js/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSCANVAS - Reportes</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3.1.1/dist/iconify.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body class="has-sidebar reportes-wide">
+<body class="has-sidebar">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="iconify sidebar-logo" data-icon="noto:card-index-dividers"></span>
+                <div class="sidebar-title">SYSCANVAS</div>
+                <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="/html/inicio-jefe.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="menu-text">Inicio</span>
+                </a>
+
+                <a href="/html/proyectos-jefe.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-chart-column"></i></span>
+                    <span class="menu-text">Proyectos</span>
+                </a>
+
+                <a href="/html/reportes.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-clipboard-list"></i></span>
+                    <span class="menu-text">Reportes</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="javascript:void(0)" onclick="logout()" class="menu-item-logout">
+                    <span class="menu-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+                    <span class="menu-text">Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <div class="logo">📋 Reportes y Analíticas</div>
+                <div class="user-info">
+                    <span class="user-name" id="user-name">Cargando...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Contenedor -->
+        <div class="container">
+
+            <!-- Filtros -->
+            <div class="card">
+                <div class="card-header">
+                    <h1>Panel de Reportes</h1>
+                </div>
+
+                <div class="grid grid-3 mb-4">
+                    <div class="form-group">
+                        <label for="filter-proyecto" class="form-label">Filtrar por Proyecto</label>
+                        <select id="filter-proyecto" class="form-control" onchange="aplicarFiltros()">
+                            <option value="">Todos los proyectos</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filter-fecha-inicio" class="form-label">Desde</label>
+                        <input type="date" id="filter-fecha-inicio" class="form-control" onchange="aplicarFiltros()">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filter-fecha-fin" class="form-label">Hasta</label>
+                        <input type="date" id="filter-fecha-fin" class="form-control" onchange="aplicarFiltros()">
+                    </div>
+                </div>
+                        <button class="btn btn-secondary" onclick="cargarDatos()">🔄 Actualizar</button>
+                        <button class="btn btn-primary" onclick="exportarReportePDF()">📄 Exportar PDF</button>
+            </div>
+
+            <!-- Estadísticas Generales -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-proyectos-activos">0</div>
+                    <div class="stat-label">Proyectos Activos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-canvas-totales">0</div>
+                    <div class="stat-label">Canvas Totales</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-tareas-totales">0</div>
+                    <div class="stat-label">Tareas Totales</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-tasa-completadas">0%</div>
+                    <div class="stat-label">Tasa de Completitud</div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3 class="mb-3">Progreso por Proyecto</h3>
+                    <canvas id="chart-proyectos" style="max-height: 300px;"></canvas>
+                </div>
+
+                <div class="card">
+                    <h3 class="mb-3">Productividad por Analista</h3>
+                    <canvas id="chart-analistas" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="mb-3">Tareas Completadas por Semana</h3>
+                <canvas id="chart-tiempo" style="max-height: 250px;"></canvas>
+            </div>
+
+            <!-- Top Analistas -->
+            <div class="card">
+                <h3 class="mb-3">🏆 Top 5 Analistas Más Productivos</h3>
+                <div id="top-analistas"></div>
+            </div>
+
+            <!-- Alertas -->
+            <div id="alert-container"></div>
+
+            <!-- Loading -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p class="mt-2">Generando reportes...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/auth.js"></script>
+    <script src="/js/reportes.js"></script>
+    <script src="/js/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</body>
+</html>

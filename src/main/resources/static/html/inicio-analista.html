@@ -1,0 +1,312 @@
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SYSCANVAS - Panel Analista</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3.1.1/dist/iconify.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    </head>
+    <body class="has-sidebar"> 
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="iconify sidebar-logo" data-icon="noto:card-index-dividers"></span>
+                <div class="sidebar-title">SYSCANVAS</div>
+                <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="/html/inicio-analista.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="menu-text">Inicio</span>
+                </a>
+
+                <a href="/html/mi-progreso.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-chart-line"></i></span>
+                    <span class="menu-text">Mi Progreso</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="javascript:void(0)" onclick="logout()" class="menu-item-logout">
+                    <span class="menu-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+                    <span class="menu-text">Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <div class="main-content">
+            <!-- Header -->
+            <header>
+                <div class="header-content">
+                    <div class="header-content-logo">
+                        <span class="iconify sidebar-logo" data-icon="noto:card-index-dividers"></span>
+                        <span class="header-content-title">SYSCANVAS</span>
+                    </div>
+                    <div class="user-info" onclick="toggleProfileMenu()">
+                        <img id="user-photo-topbar" class="foto-topbar" src="/uploads/default-foto.png" alt="Foto perfil mini">
+                        <i class="fa-solid fa-chevron-down" id="user-info-toggle-chevron-down"></i>
+                    </div>
+                    <div id="profile-menu" class="profile-menu">
+                        <div class="profile-menu-header">
+                            <img id="profile-menu-photo" class="profile-picture" src="/uploads/default-foto.png" alt="Foto perfil">
+                            <div class="profile-info">
+                                <span class="profile-name">Cargando...</span>
+                                <a class="profile-title" href="/html/perfil-analista.html">Mi Perfil</a>
+                            </div>
+                        </div>
+                        <div class="profile-divider"></div>
+                        <div class="profile-option" onclick="cambiarPassword()">
+                            <i class="fa-solid fa-lock"></i>     
+                            Cambiar contraseña
+                        </div>
+                        <div class="profile-option" onclick="logout()">
+                            <i class="fa-solid fa-right-from-bracket"></i>     
+                            Cerrar sesión
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Contenido -->
+            <div class="container">
+
+                <!-- Fecha y saludo -->
+                <div class="mb-4">
+                    <div class="text-gray" id="fecha-actual"></div>
+                    <h1 id="saludo-usuario" class="text-xl font-bold mb-2">
+                        Buenas tardes, Usuario 
+                        <span class="iconify greeting" data-icon="noto:waving-hand"></span>
+                    </h1>
+                    <p class="text-gray" style="font-style: italic;">¿Qué deseas hacer hoy?</p>
+                </div>
+
+            <!-- Estadísticas -->
+            <div class="stats-row">
+                <div class="stat-card">
+                <div class="stat-value" id="stat-canvas-asignados">0</div>
+                <div class="stat-label">Canvas Asignados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-tareas-pendientes">0</div>
+                <div class="stat-label">Tareas Pendientes</div>
+            </div>
+                <div class="stat-card">
+                <div class="stat-value" id="stat-tareas-completadas">0</div>
+                <div class="stat-label">Tareas Completadas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="stat-progreso-general">0%</div>
+                <div class="stat-label">Progreso General</div>
+            </div>
+            </div>
+
+            <!-- Panel de trabajo -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h1 class="mb-2">Panel de Trabajo</h1>
+                        <p class="text-gray">
+                            Gestiona tus tareas asignadas. Solo puedes editar cuando el canvas esté desbloqueado.
+                        </p>
+                    </div>
+                    <button class="btn btn-primary" onclick="cargarCanvas()">
+                        <span class="container-icon"><i class="fa-solid fa-refresh"></i></span>
+                        Actualizar Lista
+                    </button>
+                </div>
+
+                <!-- Alertas -->
+                <div id="alert-container"></div>
+
+                <!-- Filtros -->
+                <div class="grid grid-2 mb-4">
+                    <div class="form-group">
+                        <label for="filter-canvas" class="form-label">Filtrar por Canvas</label>
+                        <select id="filter-canvas" class="form-control" onchange="aplicarFiltros()">
+                            <option value="">Todos los canvas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-estado" class="form-label">Estado del Canvas</label>
+                        <select id="filter-estado" class="form-control" onchange="aplicarFiltros()">
+                            <option value="">Todos</option>
+                            <option value="true">Editables</option>
+                            <option value="false">Bloqueados</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading -->
+            <div id="loading" class="loading hidden">
+    <div class="spinner"></div>
+    <p class="mt-2">Cargando canvas...</p>
+</div>
+
+            <!-- Lista de Canvas -->
+            <div id="canvas-list" class="grid grid-3"></div>
+            <div id="tareas-list"></div>
+
+            <!-- Sin resultados -->
+            <div id="no-results" class="empty-state hidden">
+    <div class="empty-state-icon">📋</div>
+    <div class="empty-state-text">No se encontraron canvas</div>
+</div>
+        </div>
+
+        <!-- Modal Cambiar Contraseña -->
+        <div id="modal-password" class="modal">
+            <div class="modal-content" style="max-width: 500px;">
+                <div class="modal-header">
+                    <h3 class="modal-title">Cambiar Contraseña</h3>
+                    <button class="modal-close" onclick="cerrarModalPassword()">&times;</button>
+                </div> 
+                <form id="form-cambiar-password">
+                    <!-- Contraseña Actual -->
+                    <div class="form-group">
+                        <label for="password-actual" class="form-label">Contraseña Actual</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="password-actual" 
+                                class="form-control"
+                                placeholder="Ingrese su actual contraseña"
+                                required
+                                autocomplete="current-password"
+                            >
+                            <button 
+                                type="button" 
+                                class="password-toggle" 
+                                onclick="togglePasswordModal('password-actual')"
+                                aria-label="Mostrar contraseña"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Nueva Contraseña -->
+                    <div class="form-group">
+                        <label for="password-nueva-modal" class="form-label">Nueva Contraseña</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="password-nueva-modal" 
+                                class="form-control" 
+                                placeholder="Ingrese su nueva contraseña"
+                                required 
+                                minlength="8"
+                                oninput="validarPasswordNativo('password-nueva-modal')"
+                                autocomplete="new-password"
+                            >
+                            <button 
+                                type="button" 
+                                class="password-toggle" 
+                                onclick="togglePasswordModal('password-nueva-modal')"
+                                aria-label="Mostrar contraseña"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Confirmar Nueva Contraseña -->
+                    <div class="form-group">
+                        <label for="password-confirmar-modal" class="form-label">Confirmar Nueva Contraseña</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="password-confirmar-modal" 
+                                class="form-control" 
+                                placeholder="Repita la contraseña"
+                                required
+                                autocomplete="new-password"
+                            >
+                            <button 
+                                type="button" 
+                                class="password-toggle" 
+                                onclick="togglePasswordModal('password-confirmar-modal')"
+                                aria-label="Mostrar contraseña"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-secondary" onclick="cerrarModalPassword()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--    TEMPLATES HTML    -->
+        
+        <!-- Template: Canvas Section Header -->
+    <template id="canvas-section-header-template">
+        <div class="card-header">
+            <h2 class="text-xl font-bold canvas-nombre"></h2>
+            <span class="badge canvas-badge"></span>
+        </div>
+    </template>
+
+    <!-- Template: Etapa Section -->
+    <template id="etapa-section-template">
+        <h3 class="text-lg font-semibold mb-2 text-primary etapa-titulo"></h3>
+        <div class="grid grid-2 tareas-grid"></div>
+    </template>
+
+ <!-- Template: Canvas Card -->
+<template id="canvas-card-template">
+  <div class="canvas-card p-4">
+    <div class="flex justify-between items-center mb-2">
+      <h2 class="canvas-card-title font-bold text-lg"></h2>
+      <span class="badge"></span>
+    </div>
+
+    <p class="canvas-descripcion text-sm mb-1"></p>
+    <p class="canvas-card-meta text-xs text-gray-500 mb-3"></p>
+
+    <div class="progress-bar bg-gray-200 rounded h-2 mb-2">
+      <div class="progress-fill bg-blue-500 h-2 rounded"></div>
+    </div>
+
+    <p class="text-xs mb-2">
+      Progreso: <span class="progreso-texto">0</span>%
+    </p>
+
+    <!-- 🔥 SECCION FALTANTE QUE ROMPÍA TU JS -->
+    <div class="text-xs text-gray mt-1">
+      <span class="total-tareas">0</span> tareas • 
+      <span class="tareas-completadas">0</span> completadas
+    </div>
+
+    <div class="flex justify-end mt-3">
+      <button class="btn btn-primary btn-sm btn-ver">👁 Ver</button>
+    </div>
+  </div>
+</template>
+
+<!-- Template: Tarea Card -->
+<template id="tarea-card-template">
+    <div class="tarea-card card">
+        <h4 class="tarea-nombre font-bold mb-1"></h4>
+        <p class="tarea-descripcion text-sm text-gray mb-1"></p>
+
+        <p class="tarea-fecha text-xs text-gray mb-2"></p>
+
+        <span class="tarea-badge badge mb-3"></span>
+
+        <div class="tarea-acciones flex gap-2 mt-2"></div>
+    </div>
+</template>
+
+        <script src="/js/auth.js"></script>
+        <script src="/js/analista.js"></script>
+        <script src="/js/sidebar.js"></script>
+    </body>
+</html>

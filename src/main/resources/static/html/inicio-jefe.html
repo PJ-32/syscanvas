@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SYSCANVAS - Panel Jefe de Proyecto</title>
+        <link rel="stylesheet" href="/css/styles.css">
+        <script src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3.1.1/dist/iconify.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    </head>
+    <body class="has-sidebar">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="iconify sidebar-logo" data-icon="noto:card-index-dividers"></span>
+                <div class="sidebar-title">SYSCANVAS</div>
+                <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="/html/inicio-jefe.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-house"></i></span>
+                    <span class="menu-text">Inicio</span>
+                </a>
+
+                <a href="javascript:void(0)" onclick="abrirModalCrearCanvas()" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-plus"></i></span>
+                    <span class="menu-text">Crear Canvas</span>
+                </a>
+
+                <a href="/html/proyectos-jefe.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-chart-column"></i></span>
+                    <span class="menu-text">Proyectos</span>
+                </a>
+
+                <a href="/html/reportes.html" class="menu-item">
+                    <span class="menu-icon"><i class="fa-solid fa-clipboard-list"></i></span>
+                    <span class="menu-text">Reportes</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="javascript:void(0)" onclick="logout()" class="menu-item-logout">
+                    <span class="menu-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+                    <span class="menu-text">Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <div class="main-content">
+            <!-- Header -->
+            <header>
+                <div class="header-content">
+                    <div class="header-content-logo">
+                        <span class="iconify sidebar-logo" data-icon="noto:card-index-dividers"></span>
+                        <span class="header-content-title">SYSCANVAS</span>
+                    </div>
+                    <div class="user-info" onclick="toggleProfileMenu()">
+                        <img id="user-photo-topbar" class="foto-topbar" src="/uploads/default-foto.png" alt="Foto perfil mini">
+                        <i class="fa-solid fa-chevron-down" id="user-info-toggle-chevron-down"></i>
+                    </div>
+                    <div id="profile-menu" class="profile-menu">
+                        <div class="profile-menu-header">
+                            <img id="profile-menu-photo" class="profile-picture" src="/uploads/default-foto.png" alt="Foto perfil">
+                            <div class="profile-info">
+                                <span class="profile-name">Cargando...</span>
+                                <a class="profile-title" href="/html/perfil-jefe.html">Mi Perfil</a>
+                            </div>
+                        </div>
+                        <div class="profile-divider"></div>
+                        <div class="profile-option" onclick="cambiarPassword()">
+                            <i class="fa-solid fa-lock"></i>     
+                            Cambiar contraseña
+                        </div>
+                        <div class="profile-option" onclick="logout()">
+                            <i class="fa-solid fa-right-from-bracket"></i>     
+                            Cerrar sesión
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Contenido -->
+            <div class="container">
+                <!-- Fecha y saludo -->
+                <div class="mb-4">
+                    <div class="text-gray" id="fecha-actual"></div>
+                    <h1 id="saludo-usuario" class="text-xl font-bold mb-2">
+                        Buenas tardes, Usuario 
+                        <span class="iconify greeting" data-icon="noto:waving-hand"></span>
+                    </h1>
+                    <p class="text-gray" style="font-style: italic;">¿Qué deseas hacer hoy?</p>
+                </div>
+
+            <!-- Estadísticas -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-proyectos">0</div>
+                    <div class="stat-label">Proyectos Activos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-canvas">0</div>
+                    <div class="stat-label">Canvas Creados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-tareas-total">0</div>
+                    <div class="stat-label">Total de Tareas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-tareas">0</div>
+                    <div class="stat-label">Tareas Finalizadas</div>
+                </div>
+            </div>
+
+            <!-- Panel de control -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h1 class="mb-2">Panel de Control</h1>
+                        <p class="text-gray">
+                            Gestiona tus proyectos y canvas. Controla el acceso de edición para tu equipo.
+                        </p>
+                    </div>
+                    <button class="btn btn-primary" onclick="abrirModalCrearCanvas()">
+                        <span class="container-icon"><i class="fa-solid fa-plus"></i></span>
+                        Crear Canvas
+                    </button>
+                </div>
+
+                <!-- Alertas -->
+                <div id="alert-container"></div>
+
+                <!-- Filtros -->
+                <div class="grid grid-2 mb-4">
+                    <div class="form-group">
+                        <label for="filter-proyecto" class="form-label">Filtrar por Proyecto</label>
+                        <select id="filter-proyecto" class="form-control" onchange="aplicarFiltros()">
+                            <option value="">Todos los proyectos</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-estado" class="form-label">Filtrar por Estado</label>
+                        <select id="filter-estado" class="form-control" onchange="aplicarFiltros()">
+                            <option value="">Todos los estados</option>
+                            <option value="true">Editable</option>
+                            <option value="false">Bloqueado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="cargarCanvas()">
+                    <span class="container-icon"><i class="fa-solid fa-refresh"></i></span>
+                    Actualizar Lista
+                </button>
+            </div>
+
+            <!-- Loading -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p class="mt-2">Cargando canvas...</p>
+            </div>
+
+            <!-- Lista de Canvas -->
+            <div id="canvas-list" class="grid grid-3"></div>
+
+            <!-- Sin resultados -->
+            <div id="no-results" class="empty-state hidden">
+                <span class="iconify empty-state-icon" data-icon="noto:clipboard"></span>
+                <div class="empty-state-text">No se encontraron canvas</div>
+            </div>
+        </div>
+
+        <!-- Modal Crear Canvas -->
+        <div id="modal-crear-canvas" class="modal">
+            <div class="modal-content" style="max-width: 700px;">
+                <div class="modal-header">
+                    <h2 class="modal-title">Crear Nuevo Canvas</h2>
+                    <button class="modal-close" onclick="cerrarModalCrearCanvas()">&times;</button>
+                </div>
+
+                <p class="text-gray mb-4">Seleccione una opción para comenzar</p>
+
+                <div id="paso-1" class="grid grid-2" style="margin-bottom: 24px;">
+                    <div class="option-card" onclick="seleccionarOpcion('plantilla')">
+                        <span class="iconify option-card-icon" data-icon="noto:bookmark-tabs"></span>
+                        <div class="option-card-title">Usar una plantilla</div>
+                        <div class="option-card-description">
+                            Seleccionar proyecto desde la biblioteca.
+                        </div>
+                    </div>
+
+                    <div class="option-card" onclick="seleccionarOpcion('blanco')">
+                        <span class="iconify option-card-icon" data-icon="noto:page-facing-up"></span>
+                        <div class="option-card-title">Proyecto en blanco</div>
+                        <div class="option-card-description">
+                            Empezar desde cero.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario -->
+                <div id="paso-2" class="hidden">
+                    <form id="form-crear-canvas">
+                        <div class="form-group">
+                            <label for="nombre-canvas" class="form-label">Nombre del Canvas *</label>
+                            <input 
+                                type="text" 
+                                id="nombre-canvas" 
+                                class="form-control" 
+                                placeholder="Ej: Canvas Desarrollo App Móvil"
+                                required
+                                maxlength="200"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcion-canvas" class="form-label">Descripción</label>
+                            <textarea 
+                                id="descripcion-canvas" 
+                                class="form-control" 
+                                rows="3"
+                                placeholder="Descripción opcional del canvas"
+                                maxlength="1000"
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Vincular a un proyecto</label>
+                            
+                            <div class="flex gap-2">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="vincular-proyecto"
+                                        value="SI"
+                                        checked
+                                        onchange="toggleProyectoSelect()"
+                                    >
+                                    Sí
+                                </label>
+
+
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="vincular-proyecto"
+                                        value="NO"
+                                        onchange="toggleProyectoSelect()"
+                                    >
+                                    No
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="proyecto-canvas" class="form-label">Proyecto *</label>
+                            <select id="proyecto-canvas" class="form-control" required>
+                                <option value="">Seleccione un proyecto</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="analista-canvas" class="form-label">Asignar Analista</label>
+                            <select id="analista-canvas" class="form-control">
+                                <option value="">Sin asignar</option>
+                            </select>
+
+                        </div>
+
+                        <!-- Plantillas (solo si seleccionó plantilla) -->
+                        <div id="seccion-plantillas" class="form-group hidden">
+                            <label for="tipo-canvas" class="form-label">Tipo de Canvas *</label>
+                            <select id="tipo-canvas" class="form-control">
+                                <option value="">Seleccione un tipo</option>
+                            </select>
+                        </div>
+
+                        <!-- Etapas personalizadas (solo si seleccionó blanco) -->
+                        <div id="seccion-etapas" class="hidden">
+                            <div class="flex-between mb-2">
+                                <label class="form-label">Etapas Personalizadas</label>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="agregarEtapa()">
+                                    <span class="container-icon"><i class="fa-solid fa-plus"></i></span>
+                                    Agregar Etapa
+                                </button>
+                            </div>
+                            <div id="etapas-container"></div>
+                        </div>
+
+                        <div class="flex gap-2 mt-4">
+                            <button type="button" class="btn btn-secondary" onclick="volverPaso1()">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                Volver
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="btn-crear-canvas">
+                                <span class="iconify button" data-icon="mdi:check-circle"></span>
+                                Crear Canvas
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Cambiar Contraseña -->
+        <div id="modal-password" class="modal">
+            <div class="modal-content" style="max-width: 500px;">
+                <div class="modal-header">
+                    <h3 class="modal-title">Cambiar Contraseña</h3>
+                    <button class="modal-close" onclick="cerrarModalPassword()">&times;</button>
+                </div> 
+
+                <div id="modal-password-alerts" class="alert alert-error"></div>
+                <div id="modal-password-success" class="alert alert-success"></div>
+
+                <form id="form-cambiar-password">
+                    
+                    <!-- Contraseña Actual -->
+                    <div class="form-group">
+                        <label for="password-actual" class="form-label">Contraseña Actual</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="password-actual" 
+                                class="form-control"
+                                placeholder="Ingrese su actual contraseña"
+                                required
+                                autocomplete="current-password"
+                            >
+                            <button 
+                                type="button" 
+                                class="password-toggle" 
+                                onclick="togglePasswordModal('password-actual')"
+                                aria-label="Mostrar contraseña"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Nueva Contraseña -->
+                    <div class="form-group">
+                        <label for="password-nueva-modal" class="form-label">Nueva Contraseña</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="password-nueva-modal" 
+                                class="form-control" 
+                                placeholder="Ingrese su nueva contraseña"
+                                required 
+                                minlength="8"
+                                oninput="validarPasswordNativo('password-nueva-modal')"
+                                autocomplete="new-password"
+                            >
+                            <button 
+                                type="button" 
+                                class="password-toggle" 
+                                onclick="togglePasswordModal('password-nueva-modal')"
+                                aria-label="Mostrar contraseña"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Confirmar Nueva Contraseña -->
+                    <div class="form-group">
+                        <label for="password-confirmar-modal" class="form-label">Confirmar Nueva Contraseña</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="password-confirmar-modal" 
+                                class="form-control" 
+                                placeholder="Repita la contraseña"
+                                required
+                                autocomplete="new-password"
+                            >
+                            <button 
+                                type="button" 
+                                class="password-toggle" 
+                                onclick="togglePasswordModal('password-confirmar-modal')"
+                                aria-label="Mostrar contraseña"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-secondary" onclick="cerrarModalPassword()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--    TEMPLATES HTML    -->
+
+        <!-- Template: Canvas Card -->
+        <template id="canvas-card-template">
+            <div class="canvas-card-header">
+                <div>
+                    <div class="canvas-card-title"></div>
+                    <div class="canvas-card-meta"></div>
+                </div>
+                <span class="badge"></span>
+            </div>
+            
+            <div class="canvas-card-body">
+                <p class="text-sm text-gray mb-2 canvas-descripcion"></p>
+                <p class="canvas-analista text-xs text-gray mb-1"></p>
+                <div class="mb-2">
+                    <div class="text-sm text-gray mb-1">
+                        Progreso: <span class="progreso-texto"></span>%
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+                
+                <div class="text-sm text-gray">
+                    <span class="iconify info" data-icon="mdi:clipboard-text"></span>
+                    <span class="total-tareas"></span> tareas 
+                    •
+                    <span class="iconify info" data-icon="mdi:check-all"></span>
+                    <span class="tareas-completadas"></span> completadas
+                </div>
+            </div>
+            
+            <div class="canvas-card-footer">
+                <button class="btn btn-primary btn-sm btn-ver">
+                    <i class="fa-solid fa-eye"></i> 
+                    Ver</button>
+                <button class="btn btn-info btn-sm btn-editar">✏️ Editar</button>
+                <button class="btn btn-sm btn-toggle"></button>
+                <button class="btn btn-danger btn-sm btn-eliminar">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        </template>
+
+        <!-- Template: Input Etapa -->
+        <template id="etapa-input-template">
+            <div class="flex gap-2">
+                <input 
+                    type="text" 
+                    class="form-control etapa-input" 
+                    placeholder=""
+                    required
+                >
+                <button type="button" class="btn btn-danger btn-sm btn-eliminar-etapa">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        </template>
+
+        <!-- Modal: Acciones de Canvas -->
+        <div class="modal-overlay hidden" id="modalConfirm">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <h3 class="modal-title">Confirmación</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <p class="modal-message"></p>
+                <div class="modal-buttons">
+                    <button class="btn btn-success btn-sm">Aceptar</button>
+                    <button class="btn btn-secondary btn-sm">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-overlay hidden" id="modalInfo">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <h3 class="modal-title">Información</h3>
+                </div>
+                <p class="modal-message"></p>
+                <div class="modal-buttons">
+                    <button class="btn btn-success btn-sm">Aceptar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL EDITAR CANVAS -->
+        <div id="modal-editar-canvas" class="modal hidden">
+            <div class="modal-content" style="max-width: 500px;">
+                <div class="modal-header">
+                    <h2>✏️ Editar Canvas</h2>
+                    <button class="modal-close" onclick="cerrarModalEditarCanvas()">×</button>
+                </div>
+                <form id="form-editar-canvas">
+                    <label>Nombre</label>
+                    <input id="editar-nombre" class="form-control" required />
+                    <label>Descripción</label>
+                    <textarea id="editar-descripcion" class="form-control"></textarea>
+                    <label>Proyecto</label>
+                    <select id="editar-proyecto" class="form-control">
+                        <option value="">Sin proyecto</option>
+                    </select>
+                    <label>Analista asignado</label>
+                    <select id="editar-analista" class="form-control">
+                        <option value="">Sin asignar</option>
+                    </select>
+                    <div class="flex mt-3">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="btn btn-secondary" onclick="cerrarModalEditarCanvas()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL ASIGNAR -->
+        <div id="modal-asignar" class="modal hidden">
+            <div class="modal-content" style="max-width:450px;">
+                <div class="modal-header">
+                    <h2>👤 Asignar Analista</h2>
+                    <button class="modal-close" onclick="cerrarModalAsignar()">×</button>
+                </div>
+                <label>Seleccione un analista:</label>
+                <select id="asignar-analista" class="form-control"></select>
+                <button class="btn btn-primary mt-3" onclick="guardarAsignacion()">Guardar</button>
+            </div>
+        </div>
+
+        <script src="/js/auth.js"></script>
+        <script src="/js/jefe.js"></script>
+        <script src="/js/sidebar.js"></script>
+
+    </body>
+</html>

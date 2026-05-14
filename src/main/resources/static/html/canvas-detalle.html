@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle del Canvas</title>
+
+  <link rel="stylesheet" href="../css/styles.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="has-sidebar">
+  <!-- Sidebar -->
+  <!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <span class="iconify sidebar-logo" data-icon="noto:card-index-dividers"></span>
+        <div class="sidebar-title">SYSCANVAS</div>
+
+        <!-- Botón colapsar -->
+        <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+    </div>
+
+    <nav class="sidebar-menu">
+        <a class="menu-item" href="javascript:void(0)" onclick="irInicio()">
+            <span class="menu-icon"><i class="fa-solid fa-house"></i></span>
+            <span class="menu-text">Inicio</span>
+        </a>
+
+        <!-- Historial (nuevo botón) -->
+        <a class="menu-item" href="javascript:void(0)" onclick="abrirModalHistorial()">
+            <span class="menu-icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+            <span class="menu-text">Historial</span>
+        </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        <a href="javascript:void(0)" onclick="logout()" class="menu-item-logout">
+            <span class="menu-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <span class="menu-text">Cerrar Sesión</span>
+        </a>
+    </div>
+</aside>
+
+  <!-- Contenido principal -->
+   <div id="toast" class="toast hidden"></div>
+  <div class="main-content">
+    <header class="header-content kanban-header-enhanced">
+
+    <!-- 🗂️ Nombre del canvas -->
+    <div class="canvas-title-wrapper">
+        <span class="canvas-title-label">🗂️ Canvas:</span>
+        <span id="canvas-nombre" class="canvas-title-value">Cargando...</span>
+    </div>
+
+    <!-- 🔍 Buscador de canvas -->
+    <div class="canvas-search-wrapper">
+        <select id="selector-canvas" class="canvas-selector">
+    <option value="">Seleccionar canvas…</option>
+</select>
+    </div>
+
+    <!-- 🔒 Botón bloqueo -->
+    <button id="btn-bloqueo" class="btn-canvas-action btn-canvas-warning">
+      🔒 Bloqueado
+    </butto>
+
+    <!-- ➕ Nueva tarea -->
+    <button id="btn-nueva-tarea" class="btn-canvas-action btn-nueva-tarea">
+      <i class="fa-solid fa-plus"></i> Nueva tarea
+    </button>
+
+
+    <div class="acciones-canvas">
+  <button id="btnExportarCanvas" class="btn-accion">
+    <i class="fa fa-download"></i> Exportar Canvas
+  </button>
+
+  <label for="inputImportarCanvas" class="btn-accion btn-label">
+    <i class="fa fa-upload"></i> Importar Canvas
+  </label>
+  <input type="file" id="inputImportarCanvas" accept=".json" style="display: none;">
+</div>
+  <!-- Fila completa debajo del header -->
+<div class="progreso-header-row">
+    <div class="progreso-wrapper">
+        <div class="progreso-info">
+            <strong>Progreso General</strong>
+            <span class="detalle">
+                <span id="tareas-completadas-total">0</span> de 
+                <span id="tareas-total">0</span> tareas
+            </span>
+            <span id="progreso-porcentaje" class="porcentaje">0%</span>
+        </div>
+
+        <div class="progress-bar">
+            <div id="progress-fill-global" class="progress-fill"></div>
+        </div>
+    </div>
+</div>
+
+</header>
+    <main class="container">
+      <div id="kanban-container" class="kanban-board">
+        <div id="tareas-container" style="display: none;"></div>
+
+        <!-- Las etapas y tareas se renderizan aquí -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal único para crear tarea -->
+<div id="modal-tarea" class="modal hidden">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Nueva tarea</h2>
+      <button class="modal-close" onclick="cerrarModal()">×</button>
+    </div>
+
+    <form id="form-tarea">
+      <div class="form-group">
+        <label for="nombre-tarea" class="form-label">Nombre de la tarea</label>
+        <input type="text" id="nombre-tarea" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion-tarea" class="form-label">Descripción</label>
+        <textarea id="descripcion-tarea" class="form-control" rows="3"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="etapa-tarea" class="form-label">Etapa</label>
+        <select id="etapa-tarea" class="form-control"></select>
+      </div>
+
+      <div class="flex gap-2 mt-3">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Modal Ver Tarea -->
+<div id="modal-ver" class="modal hidden">
+  <div class="modal-view-card">
+
+    <div class="modal-header-view">
+      <h2 class="modal-title-view">📄 Detalles de la Tarea</h2>
+      <button class="modal-close-view" onclick="cerrarModal('modal-ver')">×</button>
+    </div>
+
+    <div class="modal-section-view">
+      <label class="modal-view-label">Nombre</label>
+      <p id="ver-nombre" class="modal-view-text"></p>
+    </div>
+
+    <div class="modal-section-view">
+      <label class="modal-view-label">Descripción</label>
+      <p id="ver-descripcion" class="modal-view-text"></p>
+    </div>
+
+    <div class="modal-footer-view">
+      <button class="btn-close-view" onclick="cerrarModal('modal-ver')">
+        Cerrar
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal Editar Tarea -->
+<div id="modal-editar" class="modal hidden">
+  <div class="modal-tarea-card">
+
+    <h2 class="modal-title-edit">✏️ Editar Tarea</h2>
+
+    <!-- Nombre -->
+    <label class="modal-label">Nombre de la tarea</label>
+    <input type="text" id="editar-nombre" class="modal-input-clean" />
+
+    <!-- Descripción -->
+    <label class="modal-label">Descripción</label>
+    <textarea id="editar-descripcion" rows="4" class="modal-input-clean"></textarea>
+
+    <div class="actions">
+      <button class="btn-confirm-edit" onclick="guardarEdicion()">Guardar cambios</button>
+      <button class="btn-cancel-edit" onclick="cerrarModal('modal-editar')">Cancelar</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal Eliminar Tarea -->
+<div id="modal-eliminar" class="modal hidden">
+  <div class="modal-delete-card">
+
+    <div class="modal-delete-header">
+      <div class="modal-delete-icon">⚠️</div>
+      <h2 class="modal-delete-title">Eliminar Tarea</h2>
+    </div>
+
+    <p class="modal-delete-text">
+      ¿Estás seguro de que deseas eliminar esta tarea?  
+      <br>
+      <span>Esta acción no se puede deshacer.</span>
+    </p>
+
+    <div class="modal-delete-buttons">
+      <button class="btn-delete-confirm" onclick="confirmarEliminacion()">Eliminar</button>
+      <button class="btn-delete-cancel" onclick="cerrarModal('modal-eliminar')">Cancelar</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal Historial -->
+<!-- ========================================================= -->
+<!-- MODAL: HISTORIAL -->
+<!-- ========================================================= -->
+<div id="modal-historial" class="modal hidden">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h2 class="modal-title">📜 Historial de Modificaciones</h2>
+            <button class="modal-close" onclick="cerrarModalHistorial()">&times;</button>
+        </div>
+
+        <div id="historial-container" style="max-height: 500px; overflow-y: auto;">
+        </div>
+
+        <div class="mt-4">
+            <button class="btn btn-secondary" onclick="cerrarModalHistorial()">Cerrar</button>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+function irInicio() {
+    const rol = StorageManager.get(CONFIG.STORAGE_KEYS.ROL);
+
+    if (rol === "ROLE_JEFE") {
+        window.location.href = "/html/inicio-jefe.html";
+    } else if (rol === "ROLE_ANALISTA") {
+        window.location.href = "/html/inicio-analista.html";
+    } else {
+        alert("Error: No se detectó rol de usuario");
+    }
+}
+</script>
+
+  <!-- ✅ Script de comportamiento -->
+   <script src="../js/sidebar.js"></script>
+  <script src="../js/canvas-detalle.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
