@@ -1,0 +1,96 @@
+/* ==========================================
+   SELECTOR DE CANVAS PREMIUM
+   ========================================== */
+
+.canvas-selector {
+    padding: 10px 14px;
+    border: 2px solid var(--primary-light);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.canvas-selector:hover {
+    border-color: var(--primary);
+}
+
+.canvas-selector:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(162, 123, 255, 0.25);
+}
+/* ==========================================
+   TÍTULO DEL CANVAS – DISEÑO PREMIUM
+   ========================================== */
+
+.canvas-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    padding: 10px 16px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--primary);
+}
+
+.canvas-title-label {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.canvas-title-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+/* === CANVAS CARD (para jefe) === */
+.canvas-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.canvas-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
+}
+
+.canvas-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: var(--spacing-md);
+}
+
+.canvas-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.canvas-card-meta {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.canvas-card-body {
+    margin-bottom: var(--spacing-md);
+}
+
+.canvas-card-footer {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}

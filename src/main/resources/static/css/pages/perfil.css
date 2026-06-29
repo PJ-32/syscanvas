@@ -1,0 +1,123 @@
+/*estilos para perfil jefe*/
+/* Ajustar título más a la izquierda */
+.titulo-perfil {
+    margin-left: 20px; 
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.perfil-container {
+    display: flex;
+    gap: 25px;   
+    padding: 10px 20px; 
+    align-items: flex-start;
+}
+
+/* COLUMNA IZQUIERDA (FOTO) */
+.perfil-col-foto {
+    width: 280px; 
+}
+
+.card-foto {
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* Ajustar imagen al ancho disponible */
+.foto-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.foto-perfil {
+    width: 90%;            /* se adapta al contenedor */
+    max-width: 240px;      /* límite */
+    height: auto;          /* respeta proporción */
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+/* CONTENEDOR DE BOTONES DE FOTO */
+.foto-buttons {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    padding: 0 20px;
+}
+/* ESTILO BASE PARA LOS BOTONES*/
+.foto-buttons button {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    font-size: 15px;
+}
+
+
+/* COLUMNA DERECHA */
+.perfil-col-datos {
+    flex: 1;
+    padding-right: 15px;
+    padding-left: 10px; 
+}
+
+.card-datos {
+    padding: 30px;
+}
+
+.form-datos .form-row {
+    margin-bottom: 10px; 
+}
+
+/* Espaciado más equilibrado */
+.form-datos label {
+    display: inline-block;
+    width: 170px;
+    font-weight: bold;
+    color: #4b23c2;  
+}
+
+.form-datos input {
+    width: 68%;
+    padding: 7px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+}
+
+/* BOTONES */
+.form-actions {
+    margin-top: 30px;
+    padding-left: 170px; /* alinea botones debajo de inputs */
+}
+
+.form-actions button {
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    background: #7e7edd;
+}
+
+.form-actions .btn-secondary {
+    background: #666;
+}
+
+
+
+.foto-topbar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid var(--primary);
+    transition: 0.2s ease;
+}
+
+.foto-topbar:hover {
+    transform: scale(1.05);
+}

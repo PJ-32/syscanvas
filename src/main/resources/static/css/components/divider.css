@@ -1,0 +1,24 @@
+/* === DIVIDER === */
+.divider {
+    text-align: center;
+    margin: var(--spacing-lg) 0;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--border);
+}
+
+.divider span {
+    background: var(--surface);
+    padding: 0 16px;
+    position: relative;
+    color: var(--text-secondary);
+    font-size: 14px;
+}

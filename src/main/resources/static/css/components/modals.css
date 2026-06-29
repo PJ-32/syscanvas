@@ -1,0 +1,346 @@
+/* === MODAL === */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s;
+    overflow-y: auto;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    margin: 20px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 32px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    line-height: 1;
+}
+
+.modal-close:hover {
+    background: var(--background);
+    color: var(--primary);
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 10px;
+    animation: fadeIn 0.3 ease;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 420px;
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    padding: 18px;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-message {
+    font-size: 1rem;
+    margin-bottom: 16px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+@media (max-width: 480px) {
+    
+    .modal-content {
+        padding: 20px;
+    }
+}
+/* ===========================================================
+   MODALES DE TAREAS — Diseño premium estilo SysCanvas
+   =========================================================== */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal.show {
+  display: flex !important;
+  animation: fadeIn 0.25s ease;
+}
+/* Card */
+.modal-tarea-card {
+  background: var(--surface);
+  width: 92%;
+  max-width: 480px;
+  padding: 28px;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  animation: scaleIn 0.25s ease;
+}
+/* Título */
+.modal-title {
+  color: var(--primary);
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+/* Secciones de detalle */
+.modal-detail-section {
+  background: rgba(162, 123, 255, 0.08);
+  border: 2px solid rgba(162, 123, 255, 0.15);
+  padding: 14px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+}
+
+.modal-detail-section label {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Inputs */
+.modal-field input,
+.modal-field textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.05);
+  border: 2px solid var(--border);
+  font-size: 15px;
+  color: var(--text-primary);
+  transition: var(--transition);
+}
+
+.modal-field input:focus,
+.modal-field textarea:focus {
+  border-color: var(--primary);
+  background: rgba(162, 123, 255, 0.12);
+  outline: none;
+}
+/* Botones */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+
+/* ==== MODAL EDITAR SIN ETIQUETAS FLOTANTES ==== */
+
+.modal-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.modal-input-clean {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  font-size: 15px;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+  transition: var(--transition);
+}
+
+.modal-input-clean:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(162, 123, 255, 0.15);
+  outline: none;
+}
+
+.modal-title-edit {
+  color: var(--primary);
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+
+/* ================================
+    MODAL VER TAREA - ESTILO PREMIUM
+   ================================ */
+
+.modal-view-card {
+  background: var(--surface);
+  width: 90%;
+  max-width: 480px;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: var(--shadow-lg);
+  animation: fadeInScale 0.25s ease;
+  position: relative;
+}
+
+.modal-header-view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.modal-title-view {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+}
+
+.modal-close-view {
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 28px;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: var(--transition);
+}
+
+.modal-close-view:hover {
+  background: var(--background);
+  color: var(--primary);
+}
+
+.modal-section-view {
+  background: rgba(0, 0, 0, 0.04);
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  border-left: 4px solid var(--primary-light);
+}
+
+.modal-view-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.modal-view-text {
+  font-size: 15px;
+  color: var(--text-primary);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.modal-footer-view {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+
+/* ===============================
+   MODAL ELIMINAR - ESTILO PREMIUM
+   =============================== */
+
+.modal-delete-card {
+  background: var(--surface);
+  width: 90%;
+  max-width: 420px;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  animation: fadeInScale 0.25s ease;
+  text-align: center;
+}
+
+/* Header con ícono */
+.modal-delete-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.modal-delete-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.modal-delete-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--error);
+}
+
+/* Texto */
+.modal-delete-text {
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 26px;
+  line-height: 1.5;
+}
+
+.modal-delete-text span {
+  color: var(--error);
+  font-weight: 600;
+}
+
+/* Botones */
+.modal-delete-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}

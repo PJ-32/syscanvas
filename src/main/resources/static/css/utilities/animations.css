@@ -1,0 +1,36 @@
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    
+    .card {
+        padding: var(--spacing-md);
+    }
+    
+    .login-card {
+        padding: 24px;
+    }
+    
+    .login-title {
+        font-size: 24px;
+    }
+    
+    .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .user-info {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    
+    .form-control {
+        font-size: 16px; /* Evita zoom en iOS */
+    }
+}

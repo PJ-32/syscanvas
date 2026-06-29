@@ -1,0 +1,27 @@
+/* === CARDS === */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow);
+    margin-bottom: var(--spacing-lg);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+/* Ensanchar cards de reportes */
+.reportes-wide .card {
+    max-width: 100%;           /* Permite ocupar todo el ancho */
+    width: 100%;
+}

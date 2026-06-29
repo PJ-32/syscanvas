@@ -1,0 +1,231 @@
+/* ==========================================
+   KANBAN BOARD - VERSIÓN PREMIUM MODERNA
+   ========================================== */
+
+.kanban-board {
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+    overflow-x: auto;
+    padding: 24px;
+    min-height: 82vh;
+    border-radius: 14px;
+    background: linear-gradient(
+        135deg,
+        var(--surface) 0%,
+        var(--background) 100%
+    );
+    box-shadow: var(--shadow-md);
+}
+
+/* COLUMNAS MODERNAS */
+.kanban-column {
+    width: 310px;
+    min-width: 310px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    transition: all .25s ease;
+}
+
+.kanban-column:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+}
+
+/* HEADER MODERNO */
+.kanban-header {
+    padding: 16px;
+    border-radius: 18px 18px 0 0;
+    background: linear-gradient(
+        135deg,
+        var(--primary) 0%,
+        var(--primary-dark) 100%
+    );
+    color: #fff;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: .6px;
+    box-shadow: inset 0 -2px 4px rgba(0,0,0,0.1);
+}
+
+/* CONTENEDOR DE TAREAS */
+.kanban-tasks {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+/* TARJETAS PREMIUM */
+.task-card {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    border-left: 5px solid var(--primary);
+    transition: all 0.22s ease;
+    cursor: grab;
+    font-size: 15px;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    background: var(--primary-light);
+    color: #fff;
+}
+
+/* TAREA ARRASTRÁNDOSE */
+.task-card.dragging {
+    opacity: 0.65;
+    transform: rotate(2deg) scale(1.03);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+/* ZONA DE DROP ACTIVA */
+.kanban-tasks.drag-over {
+    background: rgba(0,0,0,0.04);
+    border: 2px dashed var(--primary);
+    border-radius: 14px;
+    padding: 18px;
+}
+
+
+
+/* SCROLL MODERNO */
+.kanban-board::-webkit-scrollbar,
+.kanban-tasks::-webkit-scrollbar {
+    height: 10px;
+    width: 8px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb,
+.kanban-tasks::-webkit-scrollbar-thumb {
+    background: var(--primary-light);
+    border-radius: 10px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb:hover,
+.kanban-tasks::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .kanban-board {
+        flex-direction: column;
+    }
+
+    .kanban-column {
+        width: 100%;
+        min-width: 100%;
+    }
+}
+/*  ==========================================
+        BOTONES DE ACCIÓN EN TAREAS
+    ==========================================*/
+.task-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 8px;
+  padding-right: 4px;
+}
+
+.task-actions button,
+.task-actions .action-btn {
+  all: unset;
+  cursor: pointer;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #555;
+  transition: transform 0.15s ease;
+}
+
+.task-actions button {
+  opacity: 1 !important;
+}
+
+/* Hover limpio sin efectos raros */
+.task-actions button:hover {
+  transform: scale(1.2);
+}
+
+/* Colores de hover */
+.task-actions .ver:hover {
+  color: var(--primary);
+}
+
+.task-actions .editar:hover {
+  color: #f59e0b;
+}
+
+.task-actions .eliminar:hover {
+  color: var(--error);
+}
+
+/* Evitar que el hover del card afecte los botones */
+.task-card:hover .task-actions button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: inherit;
+}
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+
+@keyframes scaleIn {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+/* === OPTION CARD (para crear canvas) === */
+.option-card {
+    background: rgba(139, 92, 246, 0.05);
+    border: 2px solid var(--secondary);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.option-card:hover {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.option-card-icon {
+    font-size: 70px;
+    margin-bottom: 12px;
+}
+
+.option-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.option-card-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+.acciones-canvas {
+    display: flex;
+    gap: 10px;
+}

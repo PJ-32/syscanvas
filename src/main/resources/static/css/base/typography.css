@@ -1,0 +1,13 @@
+/* Fuentes y estilos de texto base */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-gray { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.text-primary { color: var(--primary); }
+.text-error { color: var(--error); }
+.text-success { color: var(--success); }
+.text-sm { font-size: 14px; }
+.text-lg { font-size: 18px; }
+.text-xl { font-size: 20px; }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }

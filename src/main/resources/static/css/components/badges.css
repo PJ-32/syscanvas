@@ -1,0 +1,48 @@
+/* === BADGES === */
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-success {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.badge-warning {
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+.badge-error {
+    background: var(--error-light);
+    color: var(--error);
+}
+
+.badge-primary {
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--primary);
+}
+/*separar badge de editable/bloqueo del nombre canvas*/
+.canvas-card .badge {
+    margin-left: 40px;
+}
+.badge-estado {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-activo {
+    background-color: #d1f7d6;
+    color: #2e7d32;
+}
+
+.badge-inactivo {
+    background-color: #ffd9d9;
+    color: #c62828;
+}

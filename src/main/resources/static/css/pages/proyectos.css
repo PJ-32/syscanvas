@@ -1,0 +1,11 @@
+.reportes-wide .grid.grid-2,
+.reportes-wide .grid.grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+}
+
+.proyecto-fecha-estado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}

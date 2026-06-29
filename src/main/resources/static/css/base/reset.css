@@ -1,0 +1,83 @@
+/* ==========================================
+    BASE - RESET Y VARIABLES
+   ========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Colores Principales */
+    --primary: #9292DB;
+    --primary-dark: #7e7edd;
+    --primary-light: #D6CCF3;
+    --primary-black: #000000;
+    --overlay-primary: #9292DBA4;
+    --overlay-primary-light: #beaafacb;
+    --overlay-primary-dark: #7e7edd5d;
+    --secondary: #B4C8DC;
+    --background: #F2F2F2;
+    --surface: #FFFFFF;
+    
+    /* Estados */
+    --success: #10B981;
+    --success-light: #D1FAE5;
+    --warning: #F59E0B;
+    --warning-light: #FEF3C7;
+    --error: #EF4444;
+    --error-light: #FEE2E2;
+    --info: #3B82F6;
+    --info-light: #DBEAFE;
+    
+    /* Textos */
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+    
+    /* Bordes */
+    --border: #E5E7EB;
+    --border-hover: #D1D5DB;
+    
+    /* Sombras */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    
+    /* Espaciado */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 18px;
+    --spacing-xl: 20px;
+    --spacing-xxl: 32px;
+    
+    /* Bordes redondeados */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    
+    /* Transiciones */
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-primary);
+    line-height: 1.6;
+    background: var(--background);
+}
+
+body.has-sidebar {
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* === HIDDEN === */
+.hidden {
+    display: none !important;
+}

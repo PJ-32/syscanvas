@@ -1,0 +1,443 @@
+/* === BUTTONS === */
+.btn {
+    padding: 12px 22px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.btn-secondary {
+    background: var(--text-secondary);
+    color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: var(--text-primary);
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+    background: #60e4ba;
+}
+
+.btn-danger {
+    background: var(--error);
+    color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: #dd7c7c;
+}
+
+.btn-warning {
+    background: var(--warning);
+    color: white;
+}
+
+.btn-warning:hover:not(:disabled) {
+    background: #D97706;
+}
+
+.btn:disabled {
+    background: var(--text-muted);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.btn-lg {
+    padding: 16px 32px;
+    font-size: 18px;
+}
+
+.btn-link {
+    background: none;
+    color: var(--primary);
+    padding: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+    background: none;
+    transform: none;
+}
+
+.btn-block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* BOTÓN NUEVA TAREA */
+.btn-add-task {
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    margin: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .25s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-add-task:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+.btn-close {
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  border: none;
+}
+
+.btn-confirm {
+  background: var(--success);
+  color: white;
+  padding: 10px 22px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  border: none;
+}
+
+.btn-cancel {
+  background: var(--text-secondary);
+  color: white;
+  padding: 10px 22px;
+  border-radius: var(--radius-md);
+  border: none;
+}
+
+.btn-danger {
+  background: var(--error);
+  color: white;
+  padding: 10px 22px;
+  border-radius: var(--radius-md);
+  border: none;
+}
+
+.btn-close:hover,
+.btn-confirm:hover,
+.btn-cancel:hover,
+.btn-danger:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Botones */
+.btn-confirm-edit {
+  background: var(--primary);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-confirm-edit:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.btn-cancel-edit {
+  background: var(--text-secondary);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-cancel-edit:hover {
+  background: var(--text-primary);
+}
+.btn-close-view {
+  background: var(--primary);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-close-view:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.btn-delete-confirm {
+  background: var(--error);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-delete-confirm:hover {
+  background: #d93636;
+  transform: translateY(-2px);
+}
+
+.btn-delete-cancel {
+  background: var(--text-secondary);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-delete-cancel:hover {
+  background: var(--text-primary);
+  transform: translateY(-2px);
+}
+.btn-accion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 160px;
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: 600;
+
+    background: var(--primary, #4A90E2);
+    color: white;
+
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-accion i {
+    margin-right: 6px;
+}
+
+.btn-label {
+    cursor: pointer;
+    display: inline-flex;              
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-accion:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow, 0 4px 10px rgba(0,0,0,0.15));
+
+    background: var(--primary-dark, #357ABD);
+}
+/* ==========================================================
+   BOTONES PREMIUM – CONSISTENTES CON TU TEMA
+   ========================================================== */
+
+.btn-canvas-action {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 180px;
+    padding: 10px 16px !important;
+
+    font-size: 15px !important;
+    font-weight: 600 !important;
+
+    border-radius: var(--radius-md) !important;
+    border: none !important;
+    cursor: pointer;
+
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.btn-canvas-action:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* Mantener cambios de color de tus clases EXISTENTES */
+.btn-warning {
+    background: var(--warning) !important;
+    color: white !important;
+}
+
+.btn-warning:hover {
+    background: #D97706 !important;
+}
+
+.btn-success {
+    background: var(--success) !important;
+    color: white !important;
+}
+
+.btn-success:hover {
+    background: #0EA371 !important;
+}
+/* =======================================================
+   BOTÓN NUEVA TAREA – AZUL CLARO REAL
+   ======================================================= */
+
+.btn-nueva-tarea {
+    background: #6EC6FF !important;        
+    color: #003B73 !important;            
+}
+
+.btn-nueva-tarea:hover:not(:disabled) {
+    background: #40B3FF !important;       
+    color: white !important;
+}
+/*boton editar*/
+.btn-info {
+    background: var(--info);
+    color: white;
+}
+
+.btn-info:hover:not(:disabled) {
+    background: #1A56DB; /* tono más oscuro */
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+/* BOTÓN PRINCIPAL (Modificar Foto) */
+.btn-foto-primary {
+    background: #7e7edd;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s;
+}
+
+.btn-foto-primary:hover {
+    background: #7e7edd;
+}
+
+/* BOTÓN ROJO (Eliminar Foto) */
+.btn-foto-danger {
+    background: #d63031;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s;
+}
+
+.btn-foto-danger:hover {
+    background: #b02222;
+}
+/* =====================================================
+   BOTONES PREMIUM PARA PROYECTOS – SysCanvas
+   ===================================================== */
+.btn-proyecto {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    padding: 10px 22px;
+    border-radius: var(--radius-lg);
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-proyecto:hover:not(:disabled) {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    box-shadow: var(--shadow-md);
+}
+
+.btn-proyecto:active {
+    transform: scale(0.97);
+}
+
+/* Versión secundaria gris elegante */
+.btn-proyecto-secondary {
+    background: var(--text-secondary);
+    color: white;
+    padding: 10px 22px;
+    border-radius: var(--radius-lg);
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-proyecto-secondary:hover {
+    background: var(--text-primary);
+    transform: translateY(-3px);
+}
+
+@media (max-width: 480px) {
+    .btn {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+}
+/*boton completar / rehacer*/
+.task-actions .toggle {
+  font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.task-actions .toggle:hover {
+  transform: scale(1.2);
+}
